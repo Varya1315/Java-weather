@@ -40,7 +40,7 @@ public class MemoryWeatherServicelmpl implements WeatherService {
 
     @Override
     public Towns findByNameTowns(String nameTowns) {
-        return repository.FindByNameTowns(nameTowns);
+        return repository.findByNameTown(nameTowns);
     }
 
 }

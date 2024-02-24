@@ -9,20 +9,20 @@ import java.util.List;
 @Repository
 //для чего мы делаем константу final
 public class MemoryWeatherDAO {
-    private final List<Towns> TOWN = new ArrayList<>();
+    private final List<Towns> MainTown = new ArrayList<>();
 
     public List<Towns> findAllTowes() {
-        return TOWN;
+        return MainTown;
     }
 
     public Towns saveTowns(Towns towns) {
-        TOWN.add(towns);
+        MainTown.add(towns);
         return towns;
     }
 
 
     public Towns findByPositionSun(String positionSun) {
-        for (Towns temp : TOWN) {
+        for (Towns temp : MainTown) {
             if (temp.getPositionSun().equals(positionSun)) {
                 return temp;
             }
@@ -30,8 +30,8 @@ public class MemoryWeatherDAO {
         return null;
     }
 
-    public Towns FindByNameTowns (String nameTowns) {
-        for (Towns temp : TOWN) {
+    public Towns findByNameTown(String nameTowns) {
+        for (Towns temp : MainTown) {
             if (temp.getNameTowns().equals(nameTowns)) {
                 return temp;
             }
@@ -44,16 +44,16 @@ public class MemoryWeatherDAO {
         var towns = findByPositionSun(positionSun);
         if (towns != null)
         {
-            TOWN.remove(towns);
+            MainTown.remove(towns);
         }
     }
 
     public void deleteTowns2(String nameTowns) {
 
-        var towns = FindByNameTowns(nameTowns);
+        var towns = findByNameTown(nameTowns);
         if (towns != null)
         {
-            TOWN.remove(towns);
+            MainTown.remove(towns);
         }
     }
 }

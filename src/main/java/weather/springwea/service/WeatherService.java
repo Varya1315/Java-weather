@@ -1,6 +1,5 @@
 package weather.springwea.service;
 
-import org.springframework.stereotype.Service;
 import weather.springwea.model.Towns;
 
 import java.util.List;
