@@ -2,7 +2,7 @@ package weather.springwea.model;
 
 import lombok.*;
 
-import java.sql.Time;
+
 @Data
 @Builder
 
