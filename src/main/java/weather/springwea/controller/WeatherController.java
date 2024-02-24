@@ -22,8 +22,7 @@ public final class WeatherController {
     }
     @PostMapping("save_towns")
 public  Towns saveTowns (@RequestBody Towns towns){
-        return service.saveTowns(towns);
-
+         return service.saveTowns(towns);
 }
 
 @GetMapping("findposition/{positionSun}")
@@ -38,15 +37,17 @@ public  Towns findByPositionSun (@PathVariable String positionSun){
     }
 
     @DeleteMapping("delete_byname/{nameTowns}")
-public void deleteTowns (@PathVariable String nameTowns){
+public String deleteTowns (@PathVariable String nameTowns){
 
         service.deleteTowns2(nameTowns);
+        return "Towns was successfully delete";
 }
 
     @DeleteMapping("delete_byposition/{positionSun}")
-    public void deleteTowns2 (@PathVariable String positionSun){
+    public String deleteTowns2 (@PathVariable String positionSun){
 
         service.deleteTowns(positionSun);
+        return "Towns was successfully delete";
     }
 
 }

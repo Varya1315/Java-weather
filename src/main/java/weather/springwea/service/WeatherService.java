@@ -9,9 +9,9 @@ public interface WeatherService {
      List<Towns> findAllTowes();
      Towns saveTowns(Towns towns);
      Towns findByPositionSun(String positionSun);
-     void deleteTowns(String nameTowns);
+     String deleteTowns(String nameTowns);
 
-     void deleteTowns2(String positionSun);
+     String deleteTowns2(String positionSun);
 
      Towns findByNameTowns(String nameTowns);
 }

@@ -13,6 +13,7 @@ import java.util.List;
 public class MemoryWeatherServicelmpl implements WeatherService {
 
     private final MemoryWeatherDAO repository;
+
     @Override
     public List<Towns> findAllTowes() {
         return repository.findAllTowes();
@@ -25,17 +26,17 @@ public class MemoryWeatherServicelmpl implements WeatherService {
 
     @Override
     public Towns findByPositionSun(String positionSun) {
-        return repository.findByPositionSun(positionSun);
+        return repository.findByPositionSun(String.valueOf(positionSun));
     }
 
     @Override
-    public void deleteTowns(String positionSun) {
-         repository.deleteTowns(positionSun);
+    public String deleteTowns(String positionSun) {
+        return repository.deleteTowns(String.valueOf(positionSun));
     }
 
     @Override
-    public void deleteTowns2(String nameTowns) {
-        repository.deleteTowns2(nameTowns);
+    public String deleteTowns2(String nameTowns) {
+        return repository.deleteTowns2(nameTowns);
     }
 
     @Override
