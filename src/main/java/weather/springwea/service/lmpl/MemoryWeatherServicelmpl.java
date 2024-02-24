@@ -30,13 +30,13 @@ public class MemoryWeatherServicelmpl implements WeatherService {
     }
 
     @Override
-    public String deleteTowns(String positionSun) {
-        return repository.deleteTowns(String.valueOf(positionSun));
+    public String deleteTownsByPosition(String positionSun) {
+        return repository.deleteTownsByPosition(String.valueOf(positionSun));
     }
 
     @Override
-    public String deleteTowns2(String nameTowns) {
-        return repository.deleteTowns2(nameTowns);
+    public String deleteTownsByName(String nameTowns) {
+        return repository.deleteTownsByName(nameTowns);
     }
 
     @Override

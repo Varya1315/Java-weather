@@ -39,7 +39,7 @@ public class MemoryWeatherDAO {
         return null;
     }
 
-    public String deleteTowns(String positionSun) {
+    public String deleteTownsByPosition(String positionSun) {
 
         var towns = findByPositionSun(positionSun);
         if (towns != null)
@@ -49,7 +49,7 @@ public class MemoryWeatherDAO {
         return null;
     }
 
-    public String deleteTowns2(String nameTowns) {
+    public String deleteTownsByName(String nameTowns) {
 
         var towns = findByNameTown(nameTowns);
         if (towns != null)

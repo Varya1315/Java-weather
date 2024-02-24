@@ -39,14 +39,14 @@ public  Towns findByPositionSun (@PathVariable String positionSun){
     @DeleteMapping("delete_byname/{nameTowns}")
 public String deleteTowns (@PathVariable String nameTowns){
 
-        service.deleteTowns2(nameTowns);
+        service.deleteTownsByName(nameTowns);
         return "Towns was successfully delete";
 }
 
     @DeleteMapping("delete_byposition/{positionSun}")
-    public String deleteTowns2 (@PathVariable String positionSun){
+    public String deleteTownsByPosition (@PathVariable String positionSun){
 
-        service.deleteTowns(positionSun);
+        service.deleteTownsByPosition(positionSun);
         return "Towns was successfully delete";
     }
 
