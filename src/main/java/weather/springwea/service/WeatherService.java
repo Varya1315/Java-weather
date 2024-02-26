@@ -1,17 +1,18 @@
 package weather.springwea.service;
 
-import weather.springwea.model.Towns;
+import org.springframework.stereotype.Service;
+import weather.springwea.model.Town;
 
 import java.util.List;
-//почему не нужна аннотация сервис
+@Service
 public interface WeatherService {
 
-     List<Towns> findAllTowes();
-     Towns saveTowns(Towns towns);
-     Towns findByPositionSun(String positionSun);
+     List<Town> findAllTowes();
+     Town saveTowns(Town town);
+     Town findByPositionSun(String positionSun);
      String deleteTownsByPosition(String nameTowns);
 
      String deleteTownsByName(String positionSun);
 
-     Towns findByNameTowns(String nameTowns);
+     Town findByNameTowns(String nameTowns);
 }

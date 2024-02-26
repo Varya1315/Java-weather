@@ -1,28 +1,28 @@
 package weather.springwea.repository;
 
 import org.springframework.stereotype.Repository;
-import weather.springwea.model.Towns;
+import weather.springwea.model.Town;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-//для чего мы делаем константу final
-public class MemoryWeatherDAO {
-    private final List<Towns> mainTown = new ArrayList<>();
 
-    public List<Towns> findAllTowes() {
+public class MemoryWeatherDAO {
+    private final List<Town> mainTown = new ArrayList<>();
+
+    public List<Town> findAllTowes() {
         return mainTown;
     }
 
-    public Towns saveTowns(Towns towns) {
-        mainTown.add(towns);
-        return towns;
+    public Town saveTowns(Town town) {
+        mainTown.add(town);
+        return town;
     }
 
 
-    public Towns findByPositionSun(String positionSun) {
-        for (Towns temp : mainTown) {
+    public Town findByPositionSun(String positionSun) {
+        for (Town temp : mainTown) {
             if (temp.getPositionSun().equals(positionSun)) {
                 return temp;
             }
@@ -30,8 +30,8 @@ public class MemoryWeatherDAO {
         return null;
     }
 
-    public Towns findByNameTown(String nameTowns) {
-        for (Towns temp : mainTown) {
+    public Town findByNameTown(String nameTowns) {
+        for (Town temp : mainTown) {
             if (temp.getNameTowns().equals(nameTowns)) {
                 return temp;
             }

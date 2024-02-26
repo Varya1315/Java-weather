@@ -2,30 +2,30 @@ package weather.springwea.service.lmpl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import weather.springwea.model.Towns;
+import weather.springwea.model.Town;
 import weather.springwea.repository.MemoryWeatherDAO;
 import weather.springwea.service.WeatherService;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor//внедруние через конструктор
+@AllArgsConstructor
 public class MemoryWeatherServicelmpl implements WeatherService {
 
     private final MemoryWeatherDAO repository;
 
     @Override
-    public List<Towns> findAllTowes() {
+    public List<Town> findAllTowes() {
         return repository.findAllTowes();
     }
 
     @Override
-    public Towns saveTowns(Towns towns) {
-        return repository.saveTowns(towns);
+    public Town saveTowns(Town town) {
+        return repository.saveTowns(town);
     }
 
     @Override
-    public Towns findByPositionSun(String positionSun) {
+    public Town findByPositionSun(String positionSun) {
         return repository.findByPositionSun(String.valueOf(positionSun));
     }
 
@@ -40,7 +40,7 @@ public class MemoryWeatherServicelmpl implements WeatherService {
     }
 
     @Override
-    public Towns findByNameTowns(String nameTowns) {
+    public Town findByNameTowns(String nameTowns) {
         return repository.findByNameTown(nameTowns);
     }
 

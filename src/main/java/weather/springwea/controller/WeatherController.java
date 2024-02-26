@@ -2,7 +2,7 @@ package weather.springwea.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import weather.springwea.model.Towns;
+import weather.springwea.model.Town;
 import weather.springwea.service.WeatherService;
 
 import java.util.List;
@@ -15,36 +15,38 @@ public final class WeatherController {
     private WeatherService service;
 
     @GetMapping()
-    public List<Towns> findAllTowes() {
+    public List<Town> findAllTowes() {
         return service.findAllTowes();
 
 //saveTowns  findByPositionSun deleteTowns findByNameTowns
     }
+
     @PostMapping("save_towns")
-public  Towns saveTowns (@RequestBody Towns towns){
-         return service.saveTowns(towns);
-}
+    public Town saveTowns(@RequestBody Town town) {
+        return service.saveTowns(town);
+    }
 
-@GetMapping("findposition/{positionSun}")
-public  Towns findByPositionSun (@PathVariable String positionSun){
-        return  service.findByPositionSun(positionSun);
-
-}
-    @GetMapping("findname/{nameTowns}")
-    public  Towns findByNameTowns (@PathVariable String nameTowns){
-        return  service.findByNameTowns(nameTowns);
+    @GetMapping("findposition")
+    public Town findByPositionSun(@RequestParam String positionSun) {
+        return service.findByPositionSun(positionSun);
 
     }
 
-    @DeleteMapping("delete_byname/{nameTowns}")
-public String deleteTowns (@PathVariable String nameTowns){
+    @GetMapping("findname")
+    public Town findByNameTowns(@RequestParam String nameTowns) {
+        return service.findByNameTowns(nameTowns);
+
+    }
+
+    @DeleteMapping("delete_byname")
+    public String deleteTowns(@RequestParam String nameTowns) {
 
         service.deleteTownsByName(nameTowns);
         return "Towns was successfully delete";
-}
+    }
 
-    @DeleteMapping("delete_byposition/{positionSun}")
-    public String deleteTownsByPosition (@PathVariable String positionSun){
+    @DeleteMapping("delete_byposition")
+    public String deleteTownsByPosition(@RequestParam String positionSun) {
 
         service.deleteTownsByPosition(positionSun);
         return "Towns was successfully delete";

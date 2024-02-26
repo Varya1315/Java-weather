@@ -6,7 +6,7 @@ import lombok.*;
 @Data
 @Builder
 
-public class Towns {
+public class Town {
 
     private String nameTowns;
     private String coordinates;
