@@ -16,7 +16,7 @@ import java.util.List;
 @Transactional
 
 public class RegionService {
-    @Autowired
+
     private final RegionRepository repository;
 
    public List<Region>  findAll(){
