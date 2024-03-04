@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-import weather.springwea.model.Region;
+
 import weather.springwea.model.Towns;
 import weather.springwea.repository.TownRepository;
 
