@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 @Primary
-@Transactional
+
 public class TownService {
      private final TownRepository repository;
 

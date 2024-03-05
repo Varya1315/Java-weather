@@ -6,7 +6,7 @@ import weather.springwea.model.Towns;
 
 public interface TownRepository extends  JpaRepository<Towns, Long> {
 
- void deleteTownsByNameTowns(String nameTowns);
+
  Towns findByNameTowns(String nameTowns);
 
 }

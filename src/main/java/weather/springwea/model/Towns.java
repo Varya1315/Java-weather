@@ -1,13 +1,13 @@
 package weather.springwea.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 
 @Data
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
+
 
 public class Towns {
     @Id
@@ -16,12 +16,14 @@ public class Towns {
 
     private String coordinates;
 
-    @Column(unique=true)
     private String nameTowns;
     private int time;
     private String positionSun;
 
-   @ManyToOne(cascade =  CascadeType.ALL)
+
+    @ManyToOne
+    @JoinColumn(name = "region_id")
+    @JsonIgnore
     private Region region;
 
 }
