@@ -27,13 +27,14 @@ public class RegionController {
 
 
     @PostMapping("/saveRegion")
-    public ResponseEntity<Object> saveRegion(@RequestBody Region region) {
-        try {
+    public /*ResponseEntity<Object>*/ Region saveRegion(@RequestBody Region region) {
+        return service.saveRegion(region);
+        /*try {
             Optional<Region> savedRegion = service.saveRegion(region);
             return savedRegion.<ResponseEntity<Object>>map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>("Region already exists", HttpStatus.BAD_REQUEST));
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+        }*/
     }
 
 
@@ -63,4 +64,3 @@ public class RegionController {
     }
 
 }
-

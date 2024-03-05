@@ -20,10 +20,10 @@ public class Towns {
     private int time;
     private String positionSun;
 
-
-    @ManyToOne
+   /*@ManyToOne
     @JoinColumn(name = "region_id")
     @JsonIgnore
     private Region region;
 
+    */
 }

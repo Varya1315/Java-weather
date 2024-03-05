@@ -19,8 +19,7 @@ public class Region {
 
     private String name;
 
-    @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
-
-    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "region_id")
     private List<Towns> towns ;
 }
