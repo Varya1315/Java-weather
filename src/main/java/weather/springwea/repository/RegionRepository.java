@@ -10,5 +10,4 @@ public interface RegionRepository extends JpaRepository<Region, Long>{
 
     Region findByName(String name);
 
-    boolean existsByName(String name);
 }

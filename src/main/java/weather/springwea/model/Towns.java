@@ -1,6 +1,5 @@
 package weather.springwea.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,10 +19,4 @@ public class Towns {
     private int time;
     private String positionSun;
 
-   /*@ManyToOne
-    @JoinColumn(name = "region_id")
-    @JsonIgnore
-    private Region region;
-
-    */
 }

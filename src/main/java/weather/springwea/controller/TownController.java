@@ -47,5 +47,4 @@ public final class TownController {
         return service.updateTownByName(nameTowns, coordinates);
     }
 
-//localhost:8080/api/v1/weather/updateByName?nameTowns=Minsk&coordinates=53.9,27.5667
 }

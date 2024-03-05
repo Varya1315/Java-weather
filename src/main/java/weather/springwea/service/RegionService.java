@@ -10,7 +10,6 @@ import weather.springwea.repository.RegionRepository;
 import weather.springwea.repository.TownRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -28,9 +27,6 @@ public class RegionService {
 
 
     public Region saveRegion(Region newRegion) {
-        /*if (repository.existsByName(newRegion.getName())) {
-            return Optional.empty();
-        }*/
         List<Towns> temp = newRegion.getTowns();
         Towns temp1;
         for(int i=0;i<temp.size();i++)
@@ -39,19 +35,6 @@ public class RegionService {
             repos.save(temp1);
         }
         return repository.save(newRegion);
-       /* Region region = new Region();
-        region.setName(newRegion.getName());
-
-        List<Towns> townsList = newRegion.getTowns();
-        if (townsList != null) {
-            for (Towns town : townsList) {
-                town.setRegion(region);
-            }
-            region.setTowns(townsList);
-        }
-
-        Region savedRegion = repository.save(region);
-        return Optional.of(savedRegion);*/
     }
     public Region findByNameRegion(String name){
         return  repository.findByName(name);

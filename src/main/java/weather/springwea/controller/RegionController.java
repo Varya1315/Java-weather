@@ -10,7 +10,6 @@ import weather.springwea.model.Region;
 import weather.springwea.service.RegionService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/region")
@@ -27,14 +26,9 @@ public class RegionController {
 
 
     @PostMapping("/saveRegion")
-    public /*ResponseEntity<Object>*/ Region saveRegion(@RequestBody Region region) {
+    public Region saveRegion(@RequestBody Region region) {
         return service.saveRegion(region);
-        /*try {
-            Optional<Region> savedRegion = service.saveRegion(region);
-            return savedRegion.<ResponseEntity<Object>>map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>("Region already exists", HttpStatus.BAD_REQUEST));
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }*/
+
     }
 
 
