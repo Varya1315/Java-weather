@@ -23,7 +23,7 @@ import java.util.Map;
 public class TownService {
      private final Cache<String, Towns> townCache;
      private final TownRepository repository;
-     private static final Logger log = LoggerFactory.getLogger(RegionController.class);
+     private static final Logger log = LoggerFactory.getLogger(TownService.class);
 
      public List<Towns> findAllTowns() {
           // Пробуем сначала получить данные из кэша

@@ -1,6 +1,5 @@
 package weather.springwea.error;
 
-import lombok.Data;
 import org.apache.coyote.BadRequestException;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;

@@ -26,7 +26,7 @@ public class RegionService {
     private final RegionRepository repository;
     private final TownRepository repos;
     private final Cache<String, Region> regionCache;
-    private static final Logger log = LoggerFactory.getLogger(RegionController.class);
+    private static final Logger log = LoggerFactory.getLogger(RegionService.class);
 
 
     public List<Region> findAll() {
