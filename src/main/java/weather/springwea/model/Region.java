@@ -9,6 +9,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Table(name = "region")
+
 public class Region {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -25,13 +25,11 @@ public final class TownController {
         return service.saveTowns(towns);
     }
 
-
     @GetMapping("findName")
     public Towns findByNameTowns(@RequestParam String nameTowns) {
         return service.findByNameTowns(nameTowns);
 
     }
-
 
     @DeleteMapping("deleteByName")
     public ResponseEntity<String> deleteRegionByName(@RequestParam String nameTowns) {
@@ -42,6 +40,7 @@ public final class TownController {
             return new ResponseEntity<>("Region not found", HttpStatus.NOT_FOUND);
         }
     }
+
     @PutMapping("updateByName")
     public Towns updateTownByName(@RequestParam String nameTowns, @RequestParam String coordinates) {
         return service.updateTownByName(nameTowns, coordinates);
