@@ -118,19 +118,19 @@ public class RegionService {
 
         if (regionToDelete != null) {
             List<Towns> temp = regionToDelete.getTowns();
-            Towns temp1;
             for (Towns towns : temp) {
-                temp1 = towns;
-                repos.delete(temp1);
+                repos.delete(towns);
             }
             repository.delete(regionToDelete);
+            log.info("Region deleted successfully");
             regionCache.remove(name);
-            log.info("Region '{}' deleted successfully", name);
             return "Delete";
         } else {
-            log.info("Region '{}' not found for deletion", name);
+            log.info("Region not found for deletion");
             return "Region not found";
         }
+
+
     }
 
     public Region updateRegionByName(String name, String newName) {
