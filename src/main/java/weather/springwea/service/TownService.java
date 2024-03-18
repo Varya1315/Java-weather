@@ -57,41 +57,43 @@ public class TownService {
      }
 
      public String deleteTownsByNameTowns(String nameTowns) {
-          // Пробуем сначала удалить из кэша
+          // Try to remove from cache first
           if (townCache.get(nameTowns) != null) {
                townCache.remove(nameTowns);
-               log.info("Town '{}' removed from cache", nameTowns);
+               log.info("Town removed from cache");
           }
 
-          // Затем удаляем из репозитория
+          // Then delete from repository
           Towns townToDelete = repository.findByNameTowns(nameTowns);
           if (townToDelete != null) {
                repository.delete(townToDelete);
-               log.info("Town '{}' deleted from repository", nameTowns);
+               log.info("Town deleted from repository");
                return "Delete";
           } else {
-               log.info("Town '{}' not found in repository", nameTowns);
-               return "Not found.";
+               log.info("Town not found, deletion failed");
+               return null;
           }
      }
 
+
      public Towns findByNameTowns(String nameTowns) {
-          // Пробуем сначала получить данные из кэша
+          // Try to retrieve data from the cache first
           Towns cachedTown = townCache.get(nameTowns);
           if (cachedTown != null) {
                return cachedTown;
           }
 
-          // Если не найдено в кэше, получаем из репозитория и сохраняем в кэш
+          // If not found in the cache, retrieve from the repository and save to cache
           Towns town = repository.findByNameTowns(nameTowns);
           if (town != null) {
                townCache.put(nameTowns, town);
-               log.info("Town '{}' fetched from repository and cached", nameTowns);
+               log.info("Town fetched from repository and cached");
           } else {
-               log.info("Town '{}' not found in cache or repository", nameTowns);
+               log.info("Town not found in cache or repository");
           }
           return town;
      }
+
 
      public Towns updateTownByName(@RequestParam String nameTowns, @RequestParam String coordinates) {
           // Try to get data from cache first

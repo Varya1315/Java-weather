@@ -93,15 +93,15 @@ public class RegionService {
     public Region findByNameRegion(String name) {
         Region cachedRegion = regionCache.get(name);
         if (cachedRegion != null) {
-            log.info("Region '{}' found in cache", name);
+            log.info("Region found in cache");
             return cachedRegion;
         } else {
             Region region = repository.findByName(name);
             if (region != null) {
-                regionCache.put(name, region); // Сохраняем результат запроса в кэш
-                log.info("Region '{}' found in database and added to cache", name);
+                regionCache.put(name, region); // Save the query result to the cache
+                log.info("Region found in database and added to cache");
             } else {
-                log.info("Region '{}' not found", name);
+                log.info("Region not found");
             }
             return region;
         }
@@ -135,22 +135,18 @@ public class RegionService {
 
     public Region updateRegionByName(String name, String newName) {
         Region existingRegion = repository.findByName(name);
-
         if (existingRegion != null) {
             existingRegion.setName(newName);
             repository.save(existingRegion);
-
-            log.info("Region '{}' updated with new name '{}'. Cache updated.", name, newName);
-
+            log.info("Region updated with new name. Cache updated.");
             regionCache.put(newName, existingRegion);
-
             return existingRegion;
         } else {
-            log.warn("Region with name '{}' not found, update operation failed", name);
-
+            log.warn("Region not found, update operation failed");
             return null;
         }
     }
+
 }
 
 
