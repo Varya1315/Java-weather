@@ -66,15 +66,16 @@ public class RegionController {
     public ResponseEntity<List<Towns>> getUsefulData(
             @RequestParam("regionName") String regionName,
             @RequestParam("interestingFact") String interestingFact) {
-
         List<Towns> towns = service.findTownsByRegionAndInterestingFact(regionName, interestingFact);
-
         if (!towns.isEmpty()) {
+            log.info("Successfully retrieved data for region and interesting fact");
             return ResponseEntity.ok(towns);
         } else {
+            log.info("No data found for the specified region and interesting fact");
             return ResponseEntity.notFound().build();
         }
     }
+
 
     @GetMapping("/regions")
     public ResponseEntity<List<Region>> getRegionsWithMoreTowns(@RequestParam("townCount") int townCount) {

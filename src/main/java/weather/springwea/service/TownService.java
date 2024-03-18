@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import weather.springwea.cache.Cache;
 import weather.springwea.controller.RegionController;
 import weather.springwea.model.Towns;
@@ -92,20 +93,20 @@ public class TownService {
           return town;
      }
 
-     public Towns updateTownByName(String nameTowns, String coordinates) {
-          // Пробуем сначала получить данные из кэша
+     public Towns updateTownByName(@RequestParam String nameTowns, @RequestParam String coordinates) {
+          // Try to get data from cache first
           Towns existingTown = findByNameTowns(nameTowns);
-
           if (existingTown != null) {
                existingTown.setCoordinates(coordinates);
-               // Сохраняем обновленные данные в кэше перед сохранением в репозитории
+               // Save the updated data in the cache before saving it in the repository
                townCache.put(nameTowns, existingTown);
-               log.info("Town '{}' updated in cache", nameTowns);
+               log.info("Town updated in cache");
                return repository.save(existingTown);
           } else {
-               log.warn("Town '{}' not found in cache or repository, update operation failed", nameTowns);
+               log.warn("Town update operation failed due to not found in cache or repository");
                return null;
           }
-}}
+     }
+}
 
 

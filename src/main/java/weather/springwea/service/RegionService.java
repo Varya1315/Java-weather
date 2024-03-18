@@ -62,18 +62,20 @@ public class RegionService {
     public List<Towns> findTownsByRegionAndInterestingFact(String regionName, String interestingFact) {
         Region cachedRegion = regionCache.get(regionName);
         if (cachedRegion != null) {
-            log.info("Region '{}' found in cache. Retrieving towns by interesting fact '{}'", regionName, interestingFact);
+            log.info("Region found in cache. Retrieving towns by interesting fact");
             return repository.findTownsByRegionAndInterestingFact(regionName, interestingFact);
         }
-        log.info("Region '{}' not found in cache. Retrieving towns by interesting fact '{}' from repository", regionName, interestingFact);
+        log.info("Region not found in cache. Retrieving towns by interesting fact from repository");
         List<Towns> towns = repository.findTownsByRegionAndInterestingFact(regionName, interestingFact);
         if (!towns.isEmpty()) {
             Region region = repository.findByName(regionName);
             regionCache.put(regionName, region);
-            log.info("Region '{}' retrieved from repository and added to cache", regionName);
+            log.info("Region retrieved from repository and added to cache");
         }
         return towns;
     }
+
+
 
     public Region saveRegion(Region newRegion) {
         List<Towns> temp = newRegion.getTowns();
