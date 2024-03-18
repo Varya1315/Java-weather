@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import weather.springwea.cache.Cache;
-import weather.springwea.controller.RegionController;
 import weather.springwea.model.Region;
 import weather.springwea.model.Towns;
 import weather.springwea.repository.RegionRepository;
@@ -76,7 +75,6 @@ public class RegionService {
     }
 
 
-
     public Region saveRegion(Region newRegion) {
         List<Towns> temp = newRegion.getTowns();
         Towns temp1;
@@ -108,19 +106,14 @@ public class RegionService {
     }
 
     public String deleteRegionByName(String name) {
-        // Получаем регион из кэша, если он там есть
         Region regionToDelete = regionCache.get(name);
 
-        // Если регион не найден в кэше, получаем его из репозитория
         if (regionToDelete == null) {
             regionToDelete = repository.findByName(name);
         }
-
         if (regionToDelete != null) {
             List<Towns> temp = regionToDelete.getTowns();
-            for (Towns towns : temp) {
-                repos.delete(towns);
-            }
+            repos.deleteAll(temp);
             repository.delete(regionToDelete);
             log.info("Region deleted successfully");
             regionCache.remove(name);

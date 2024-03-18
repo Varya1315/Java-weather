@@ -12,9 +12,14 @@ public class Cache<K, V> {
     private static final int MAX_SIZE = 100;
 
     public void put(K key, V value) {
-        cacheMap.put(key, value);
-        if (cacheMap.size() >= MAX_SIZE)
-            cacheMap.clear();
+        if (cacheMap.containsKey(key)) {
+            cacheMap.put(key, value);
+        } else {
+            cacheMap.put(key, value);
+            if (cacheMap.size() >= MAX_SIZE) {
+                cacheMap.clear();
+            }
+        }
     }
 
     public V get(K key) {

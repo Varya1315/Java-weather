@@ -10,11 +10,11 @@ import weather.springwea.model.Towns;
 import java.util.List;
 
 @Repository
-public interface RegionRepository extends JpaRepository<Region, Long>{
+public interface RegionRepository extends JpaRepository<Region, Long> {
     Region findByName(String name);
 
-        @Query("SELECT t FROM Region r JOIN r.towns t WHERE r.name = :regionName AND t.interestingFact = :interestingFact")
-        List<Towns> findTownsByRegionAndInterestingFact(@Param("regionName") String regionName, @Param("interestingFact") String interestingFact);
+    @Query("SELECT t FROM Region r JOIN r.towns t WHERE r.name = :regionName AND t.interestingFact = :interestingFact")
+    List<Towns> findTownsByRegionAndInterestingFact(@Param("regionName") String regionName, @Param("interestingFact") String interestingFact);
 
     @Query("SELECT r FROM Region r WHERE SIZE(r.towns) > :townCount")
     List<Region> findRegionsWithMoreTowns(@Param("townCount") int townCount);

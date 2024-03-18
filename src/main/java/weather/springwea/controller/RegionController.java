@@ -28,13 +28,11 @@ public class RegionController {
         return service.findAll();
     }
 
-
     @PostMapping("/saveRegion")
     public Region saveRegion(@RequestBody Region region) {
         return service.saveRegion(region);
 
     }
-
 
     @GetMapping("findName")
     public Region findByNameRegion(@RequestParam String name) {
