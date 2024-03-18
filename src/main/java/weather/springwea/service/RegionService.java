@@ -76,17 +76,17 @@ public class RegionService {
 
 
     public Region saveRegion(Region newRegion) {
-        List<Towns> temp = newRegion.getTowns();
-        Towns temp1;
-        for (Towns towns : temp) {
-            temp1 = towns;
-            repos.save(temp1);
+        Region existingRegion = repository.findByName(newRegion.getName());
+        if (existingRegion != null) {
+            throw new IllegalArgumentException("Region with name '" + newRegion.getName() + "' already exists");
         }
+        repos.saveAll(newRegion.getTowns());
         Region savedRegion = repository.save(newRegion);
         regionCache.put(savedRegion.getName(), savedRegion);
         log.info("Region '{}' saved and added to cache", savedRegion.getName());
         return savedRegion;
     }
+
 
     public Region findByNameRegion(String name) {
         Region cachedRegion = regionCache.get(name);
