@@ -61,8 +61,8 @@ public class RegionController {
         }
     }
 
-    @GetMapping("/town&fact")
-    public ResponseEntity<List<Towns>> getUsefulData(
+    @GetMapping("/townAndFact")
+    public ResponseEntity<List<Towns>> getTownsWithFact(
             @RequestParam("regionName") String regionName,
             @RequestParam("interestingFact") String interestingFact) {
         List<Towns> towns = service.findTownsByRegionAndInterestingFact(regionName, interestingFact);
