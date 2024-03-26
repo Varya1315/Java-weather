@@ -49,29 +49,6 @@ public class TownServiceAspect {
             LOG.error("No towns found {}", repository.count());
         }
     }
-
-    /*@Pointcut("execution(* weather.springwea.service.
-    TownService.saveTowns(..)) && args(towns)")
-    public void saveTownsPointcut(finalTowns towns) {}
-
-    @Before(value = "saveTownsPointcut(towns)", argNames = "towns")
-    public void logBeforeSaveTowns(
-    final Towns towns) {
-        LOG.info("Attempting to save town '{}'",
-        towns.getNameTowns());
-    }
-
-    @AfterReturning(pointcut = "saveTownsPointcut(..)",
-    returning = "savedTown")
-    public void logSaveTownsSuccess(final Towns savedTown) {
-        if (savedTown != null) {
-            LOG.info("Town '{}' saved successfully",
-            savedTown.getNameTowns());
-        } else {
-            LOG.error("Failed to save town");
-        }
-    }*/
-
     @Pointcut("execution(* weather.springwea.service."
             + "TownService.deleteTownsByNameTowns(String))"
             + " && args(nameTowns)")

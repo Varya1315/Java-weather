@@ -74,7 +74,7 @@ public class TownService {
             final String nameTowns) {
         if (townCache.get(nameTowns) != null) {
             townCache.remove(nameTowns);
-            LOG.info("Town '{}' removed from cache", nameTowns);
+            LOG.info("Town removed from cache");
         }
         Towns townToDelete = repository.findByNameTowns(nameTowns);
         if (townToDelete != null) {
@@ -95,14 +95,14 @@ public class TownService {
             final String nameTowns) {
         Towns town = townCache.get(nameTowns);
         if (town != null) {
-            LOG.info("Town '{}' found in cache", nameTowns);
+            LOG.info("Town found in cache");
         } else {
             town = repository.findByNameTowns(nameTowns);
             if (town != null) {
-                LOG.info("Town '{}' found in database", nameTowns);
+                LOG.info("Town found in database");
                 townCache.put(nameTowns, town);
             } else {
-                LOG.info("Town '{}' not found in database", nameTowns);
+                LOG.info("Town not found in database");
             }
         }
         return town;

@@ -188,10 +188,10 @@ public class RegionService {
         if (existingRegion == null) {
             existingRegion = repository.findByName(name);
             if (existingRegion != null) {
-                LOG.info("Region '{}' retrieved from database", name);
+                LOG.info("Region retrieved from database");
             }
         } else {
-            LOG.info("Region '{}' retrieved from cache", name);
+            LOG.info("Region retrieved from cache");
         }
 
         if (existingRegion != null) {
