@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-
 import org.springframework.web.bind.annotation.RequestParam;
 import weather.springwea.cache.Cache;
 import weather.springwea.model.Towns;
@@ -23,15 +22,20 @@ import java.util.Map;
 public class TownService {
     private final Cache<String, Towns> townCache;
     private final TownRepository repository;
-    private static final Logger log = LoggerFactory.getLogger(TownService.class);
-
+    private static final Logger LOG =
+            LoggerFactory.getLogger(TownService.class);
+    /**
+     * Возвращает список всех городов, сначала ищет в кэше, затем в базе данных.
+     *
+     * @return Список всех городов.
+     */
     public List<Towns> findAllTowns() {
         List<Towns> cachedTowns = new ArrayList<>();
         for (Map.Entry<String, Towns> entry : townCache.getNativeCache()) {
             cachedTowns.add(entry.getValue());
         }
         if (!cachedTowns.isEmpty()) {
-            log.info("Found {} towns in cache", cachedTowns.size());
+            LOG.info("Found {} towns in cache", cachedTowns.size());
 
             return cachedTowns;
         }
@@ -40,63 +44,96 @@ public class TownService {
         for (Towns town : towns) {
             townCache.put(town.getNameTowns(), town);
         }
-        log.info("Fetched {} towns from repository and saved to cache", towns.size());
+        LOG.info("Fetched {} towns from database and saved to cache",
+                towns.size());
 
         return towns;
     }
 
-    public Towns saveTowns(Towns towns) {
+    /**
+     * Сохраняет город в кэш и базу данных.
+     *
+     * @param towns Город для сохранения.
+     * @return Сохраненный город.
+     */
+    public Towns saveTowns(
+            final Towns towns) {
         townCache.put(towns.getNameTowns(), towns);
-        log.info("Town '{}' saved to cache", towns.getNameTowns());
+        LOG.info("Town '{}' saved to cache", towns.getNameTowns());
 
         return repository.save(towns);
     }
-
-    public String deleteTownsByNameTowns(String nameTowns) {
+    /**
+     * Удаляет город по его имени.
+     *
+     * @param nameTowns Название города для удаления.
+     * @return Строка "Delete" в случае успешного удаления города,
+     * в противном случае возвращает null.
+     */
+    public String deleteTownsByNameTowns(
+            final String nameTowns) {
         if (townCache.get(nameTowns) != null) {
             townCache.remove(nameTowns);
-            log.info("Town removed from cache");
+            LOG.info("Town '{}' removed from cache", nameTowns);
         }
         Towns townToDelete = repository.findByNameTowns(nameTowns);
         if (townToDelete != null) {
             repository.delete(townToDelete);
-            log.info("Town deleted from repository");
             return "Delete";
         } else {
-            log.info("Town not found, deletion failed");
             return null;
         }
     }
 
-
-    public Towns findByNameTowns(String nameTowns) {
-        Towns cachedTown = townCache.get(nameTowns);
-        if (cachedTown != null) {
-            return cachedTown;
-        }
-        Towns town = repository.findByNameTowns(nameTowns);
+    /**
+     * Находит город по его имени.
+     *
+     * @param nameTowns Название города.
+     * @return Объект города, найденный по указанному имени.
+     */
+    public Towns findByNameTowns(
+            final String nameTowns) {
+        Towns town = townCache.get(nameTowns);
         if (town != null) {
-            townCache.put(nameTowns, town);
-            log.info("Town fetched from repository and cached");
+            LOG.info("Town '{}' found in cache", nameTowns);
         } else {
-            log.info("Town not found in cache or repository");
+            town = repository.findByNameTowns(nameTowns);
+            if (town != null) {
+                LOG.info("Town '{}' found in database", nameTowns);
+                townCache.put(nameTowns, town);
+            } else {
+                LOG.info("Town '{}' not found in database", nameTowns);
+            }
         }
         return town;
     }
 
-
-    public Towns updateTownByName(@RequestParam String nameTowns, @RequestParam String coordinates) {
+    /**
+     * Обновляет данные о городе по его имени.
+     *
+     * @param nameTowns    Название города.
+     * @param coordinates  Новые координаты города.
+     * @return Обновленный объект города.
+     */
+    public Towns updateTownByName(
+            final @RequestParam String nameTowns,
+            final @RequestParam String coordinates) {
         Towns existingTown = findByNameTowns(nameTowns);
         if (existingTown != null) {
             existingTown.setCoordinates(coordinates);
-            townCache.put(nameTowns, existingTown);
-            log.info("Town updated in cache");
+            if (townCache.get(nameTowns) != null) {
+                townCache.put(nameTowns, existingTown);
+                LOG.info("Town updated in cache");
+            } else {
+                LOG.info("Town updated in database");
+            }
             return repository.save(existingTown);
         } else {
-            log.warn("Town update operation failed due to not found in cache or repository");
+            LOG.warn("Town update operation failed due"
+                    + " to not found in cache or repository");
             return null;
         }
     }
-}
 
+}
 
