@@ -61,9 +61,7 @@ public class TownService {
     public Towns saveTowns(
             final Towns towns) {
         townCache.put(towns.getNameTowns(), towns);
-       // LOG.info("Town '{}' saved to cache", towns.getNameTowns());
-
-        return repository.save(towns);
+      return repository.save(towns);
     }
     /**
      * Удаляет город по его имени.

@@ -32,4 +32,13 @@ public class Region {
 
     @JoinColumn(name = "region_id")
     private List<Towns> towns;
+
+    public Region(int i, String region1, ArrayList<Object> objects) {
+    }
+
+    public <E> Region(String region1, List<E> es) {
+    }
+
+    public Region(String name) {
+    }
 }

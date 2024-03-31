@@ -67,7 +67,6 @@ class RegionServiceTest {
         verify(regionCache, times(1)).put(regionName, regionFromRepository);
         verify(repository, times(1)).findTownsByRegionAndInterestingFact(regionName, interestingFact);
     }
-
     @Test
     void testSaveRegion2() {
         // Инициализация Mockito аннотаций
@@ -151,6 +150,7 @@ class RegionServiceTest {
         // Проверяем, что метод save() был вызван столько раз, сколько регионов нужно сохранить
         verify(repository, times(regionsToSave.size())).save(any(Region.class));
     }
+
 
     @Test
     void testUpdateRegionByName_ExistingRegionInCache() {
