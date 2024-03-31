@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
-public class TownServiceTest {
+ class TownServiceTest {
 
     @Mock
     private Cache<String, Towns> townCache;
