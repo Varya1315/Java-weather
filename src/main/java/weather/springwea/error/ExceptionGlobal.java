@@ -10,17 +10,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 
-
 @ControllerAdvice
 public class ExceptionGlobal {
 
     private static final Logger LOGGER =
             LogManager.getLogger(ExceptionGlobal.class);
-
     /**
      * Обрабатывает исключение типа HttpClientErrorException
      * и возвращает ответ с кодом состояния 400.
-     *
      * @param ex      исключение типа HttpClientErrorException,
      *                которое нужно обработать
      * @param request запрос, который вызвал исключение
@@ -70,4 +67,5 @@ public class ExceptionGlobal {
                 HttpStatus.INTERNAL_SERVER_ERROR).body(
                 "500 Internal Server Error");
     }
+
 }

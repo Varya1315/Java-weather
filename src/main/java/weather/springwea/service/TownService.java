@@ -21,7 +21,9 @@ import java.util.Map;
 @Transactional
 public class TownService {
     private final Cache<String, Towns> townCache;
+
     private final TownRepository repository;
+
     private static final Logger LOG =
             LoggerFactory.getLogger(TownService.class);
     /**
@@ -59,7 +61,7 @@ public class TownService {
     public Towns saveTowns(
             final Towns towns) {
         townCache.put(towns.getNameTowns(), towns);
-        LOG.info("Town '{}' saved to cache", towns.getNameTowns());
+       // LOG.info("Town '{}' saved to cache", towns.getNameTowns());
 
         return repository.save(towns);
     }

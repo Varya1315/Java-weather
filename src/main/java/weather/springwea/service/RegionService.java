@@ -87,8 +87,7 @@ public class RegionService {
         if (cachedRegion != null) {
             LOG.info("Region found in cache."
                     + " Retrieving towns by interesting fact");
-            return repository.findTownsByRegionAndInterestingFact(
-                    regionName, interestingFact);
+            return cachedRegion.getTowns();
         }
         LOG.info("Region not found in cache."
                 + "Retrieving towns by interesting fact from repository");
@@ -122,6 +121,23 @@ public class RegionService {
         regionCache.put(savedRegion.getName(), savedRegion);
         LOG.info("Region '{}' saved and added to cache", savedRegion.getName());
         return savedRegion;
+    }
+
+    /**
+     * Сохраняет список регионов.
+     * <p>
+     * Этот метод может быть переопределен в подклассах
+     * для изменения способа сохранения регионов.
+     *
+     * @param regions Список регионов для сохранения.
+     * @return Список сохраненных регионов.
+     */
+    public  List<Region> saveRegions(
+            final List<Region> regions) {
+        List<Region> newRegions = new ArrayList<>();
+        regions.forEach(region -> newRegions.add(saveRegion(region)));
+        return newRegions;
+
     }
 
     /**

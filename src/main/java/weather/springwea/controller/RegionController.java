@@ -53,6 +53,17 @@ public class RegionController {
             @RequestBody final Region region) {
         return service.saveRegion(region);
     }
+    /**
+     * Сохраняет список регионов.
+     *
+     * @param regions Список регионов для сохранения.
+     * @return Список сохраненных регионов.
+     */
+    @PostMapping("/saveRegions")
+    public List<Region> saveRegions(
+            @RequestBody final List<Region> regions) {
+        return service.saveRegions(regions);
+    }
 
     /**
      * Найти регион по имени.
@@ -65,7 +76,6 @@ public class RegionController {
             @RequestParam final String name) {
         return service.findByNameRegion(name);
     }
-
     /**
      * Удалить регион по имени.
      *
