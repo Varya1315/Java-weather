@@ -33,8 +33,8 @@ public class Region {
     @JoinColumn(name = "region_id")
     private List<Towns> towns;
 
-    public Region(int i, String region1, ArrayList<Object> objects) {
-        /**
+    public Region(int i, String region1, List<Object> objects){
+         /**
          * Конструктор пуст, так как требуется создание объекта Region с заданными параметрами
          * для использования в тесте. Предполагается, что параметры конструктора i, region1 и objects
          * будут корректно инициализированы в контексте выполнения теста.

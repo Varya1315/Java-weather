@@ -19,7 +19,7 @@ import java.util.Map;
 @AllArgsConstructor
 @Primary
 @Transactional
-public class TownService {
+ class TownService {
     private final Cache<String, Towns> townCache;
 
     private final TownRepository repository;
