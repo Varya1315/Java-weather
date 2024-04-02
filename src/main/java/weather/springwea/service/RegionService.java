@@ -1,6 +1,5 @@
 package weather.springwea.service;
 
-
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -16,7 +15,7 @@ import weather.springwea.repository.TownRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+
 
 @Service
 @AllArgsConstructor
@@ -37,7 +36,8 @@ public class RegionService {
         List<Region> regions = repository.findAll();
 
         // Используем Stream API для обхода каждого региона и добавления его в кеш
-        regions.forEach(region -> regionCache.put(region.getName(), region));
+        regions.forEach(region ->
+                regionCache.put(region.getName(), region));
 
         return regions;
     }
@@ -55,7 +55,8 @@ public class RegionService {
     public  List<Region> saveRegions(
             final List<Region> regions) {
         List<Region> newRegions = new ArrayList<>();
-        regions.forEach(region -> newRegions.add(saveRegion(region)));
+        regions.forEach(region ->
+                newRegions.add(saveRegion(region)));
         return newRegions;
     }
     /**

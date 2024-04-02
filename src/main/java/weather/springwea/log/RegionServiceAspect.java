@@ -250,5 +250,23 @@ public class RegionServiceAspect {
             LOG.error("Region '{}' not found, update operation failed", name);
         }
     }
+    @Pointcut("execution(* weather.springwea.service.RegionService.saveRegions(..)) && args(regions)")
+    public void saveRegionsPointcut(List<Region> regions) {}
+
+    @Before(value = "saveRegionsPointcut(regions)", argNames = "regions")
+    public void logSaveRegionsCall(List<Region> regions) {
+        LOG.info("Method saveRegions called with {} regions.", regions.size());
+        // Additional logging if needed
+    }
+
+    @AfterReturning(pointcut = "saveRegionsPointcut(regions)", returning = "newRegions", argNames = "regions,newRegions")
+    public void logSaveRegionsSuccess(List<Region> regions, List<Region> newRegions) {
+        if (newRegions != null) {
+            LOG.info("Method saveRegions completed successfully. Saved {} regions.", newRegions.size());
+            // Additional logging if needed
+        } else {
+            LOG.error("Error occurred: Method saveRegions returned null.");
+        }
+    }
 }
 
