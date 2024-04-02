@@ -1,7 +1,9 @@
 package weather.springwea.log;
 
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -10,7 +12,6 @@ import weather.springwea.model.Towns;
 
 import java.util.List;
 
-
 @Aspect
 @Component
 public class RegionServiceAspect {
@@ -18,10 +19,6 @@ public class RegionServiceAspect {
 
     private static final Logger LOG = LoggerFactory.getLogger(
             RegionServiceAspect.class);
-
-    @Pointcut("execution(* weather.springwea.service.*.*(..))")
-    public void callControllers() {
-    }
 
     @Pointcut(value = "execution(* weather.springwea.service.RegionService."
             + "findTownsByRegionAndInterestingFact(String, String)) "
@@ -127,15 +124,6 @@ public class RegionServiceAspect {
         } else {
             LOG.error("No regions found with"
                     + "more than {} towns", townCount);
-        }
-    }
-
-    @AfterThrowing(value = "callControllers()", throwing = "exception")
-    public void afterThrowingCallMethod(final JoinPoint jp,
-                                        final Exception exception) {
-        if (LOG.isErrorEnabled()) {
-            LOG.error("After throwing {}, exception: {}",
-                    jp, exception.getMessage());
         }
     }
 
@@ -267,7 +255,8 @@ public class RegionServiceAspect {
 
     @Before(value = "saveRegionsPointcut(regions)", argNames = "regions")
     public void logSaveRegionsCall(List<Region> regions) {
-        LOG.info("Method attempting '{}'",regions);
+        LOG.info("Method saveRegions called with {} regions.", regions.size());
+        // Additional logging if needed
     }
 
     @AfterReturning(pointcut = "saveRegionsPointcut(regions)", returning = "newRegions", argNames = "regions,newRegions")
