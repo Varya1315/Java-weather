@@ -27,6 +27,7 @@ public class RegionService {
     private final Cache<String, Region> regionCache;
     private static final Logger LOG =
             LoggerFactory.getLogger(RegionService.class);
+
     /**
      * Получает список всех регионов.
      *
@@ -35,7 +36,6 @@ public class RegionService {
     public List<Region> findAll() {
         List<Region> regions = repository.findAll();
 
-        // Используем Stream API для обхода каждого региона и добавления его в кеш
         regions.forEach(region ->
                 regionCache.put(region.getName(), region));
 
@@ -52,13 +52,14 @@ public class RegionService {
      * @param regions Список регионов для сохранения.
      * @return Список сохраненных регионов.
      */
-    public  List<Region> saveRegions(
+    public List<Region> saveRegions(
             final List<Region> regions) {
         List<Region> newRegions = new ArrayList<>();
         regions.forEach(region ->
                 newRegions.add(saveRegion(region)));
         return newRegions;
     }
+
     /**
      * Находит и возвращает список регионов с
      * более чем указанным количеством городов.
@@ -75,7 +76,7 @@ public class RegionService {
             if (region.getTowns().size() > townCount) {
                 cachedRegions.add(region);
                 LOG.info("Region '{}' found in cache"
-                       + " with more than {} towns",
+                                + " with more than {} towns",
                         region.getName(), townCount);
             }
         }
@@ -86,11 +87,12 @@ public class RegionService {
         for (Region region : regions) {
             regionCache.put(region.getName(), region);
             LOG.info("Region '{}' retrieved from repository"
-                    + "and added to cache with more than {} towns",
+                            + "and added to cache with more than {} towns",
                     region.getName(), townCount);
         }
         return regions;
     }
+
     /**
      * Возвращает список городов по указанному региону и интересному факту.
      *
@@ -105,14 +107,17 @@ public class RegionService {
         // Проверяем, есть ли регион в кеше
         Region cachedRegion = regionCache.get(regionName);
         if (cachedRegion != null) {
-            LOG.info("Region found in cache. Retrieving towns by interesting fact");
+            LOG.info("Region found in cache."
+                   + "Retrieving towns by interesting fact");
             // Если регион найден в кеше, возвращаем список городов из кеша
             return cachedRegion.getTowns();
         }
 
-        LOG.info("Region not found in cache. Retrieving towns by interesting fact from repository");
+        LOG.info("Region not found in cache."
+                + "Retrieving towns by interesting fact from repository");
         // Если регион не найден в кеше, получаем список городов из репозитория
-        List<Towns> towns = repository.findTownsByRegionAndInterestingFact(regionName, interestingFact);
+        List<Towns> towns = repository.findTownsByRegionAndInterestingFact(
+                regionName, interestingFact);
 
         // Если список городов не пустой, добавляем регион в кеш
         if (!towns.isEmpty()) {
@@ -171,6 +176,7 @@ public class RegionService {
             return region;
         }
     }
+
     /**
      * Удаляет регион по его имени.
      *
@@ -198,7 +204,7 @@ public class RegionService {
     /**
      * Обновляет название региона с указанным именем.
      *
-     * @param name Имя региона для обновления.
+     * @param name    Имя региона для обновления.
      * @param newName Новое имя региона.
      * @return Обновленный объект региона или null,
      * если регион с указанным именем не найден.
