@@ -66,39 +66,6 @@ public class RegionService {
     }
 
     /**
-     * Находит и возвращает список регионов с
-     * более чем указанным количеством городов.
-     *
-     * @param townCount Количество городов.
-     * @return Список регионов с более
-     * чем указанным количеством городов.
-     */
-    public List<Region> findRegionsWithMoreTowns(
-            final int townCount) {
-        List<Region> cachedRegions = new ArrayList<>();
-        for (Map.Entry<String, Region> entry : regionCache.getNativeCache()) {
-            Region region = entry.getValue();
-            if (region.getTowns().size() > townCount) {
-                cachedRegions.add(region);
-                LOG.info("Region '{}' found in cache"
-                                + " with more than {} towns",
-                        region.getName(), townCount);
-            }
-        }
-        if (!cachedRegions.isEmpty()) {
-            return cachedRegions;
-        }
-        List<Region> regions = repository.findRegionsWithMoreTowns(townCount);
-        for (Region region : regions) {
-            regionCache.put(region.getName(), region);
-            LOG.info("Region '{}' retrieved from repository"
-                            + "and added to cache with more than {} towns",
-                    region.getName(), townCount);
-        }
-        return regions;
-    }
-
-    /**
      * Возвращает список городов по указанному региону и интересному факту.
      *
      * @param regionName      Название региона.

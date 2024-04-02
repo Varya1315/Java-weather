@@ -101,24 +101,4 @@ import static org.mockito.Mockito.*;
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
-    @Test
-    void getRegionsWithMoreTowns() {
-        List<Region> regions = new ArrayList<>();
-        regions.add(new Region());
-        regions.add(new Region());
-
-        when(regionService.findRegionsWithMoreTowns(5)).thenReturn(regions);
-
-        ResponseEntity<List<Region>> response = regionController.getRegionsWithMoreTowns(5);
-        assertEquals(regions, response.getBody());
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-
-        when(regionService.findRegionsWithMoreTowns(10)).thenReturn(new ArrayList<>());
-        response = regionController.getRegionsWithMoreTowns(10);
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-
-        when(regionService.findRegionsWithMoreTowns(0)).thenThrow(new RuntimeException());
-        response = regionController.getRegionsWithMoreTowns(0);
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-    }
     }

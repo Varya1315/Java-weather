@@ -134,28 +134,4 @@ public class RegionController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
-    /**
-     * Получить список регионов с числом городов больше указанного значения.
-     *
-     * @param townCount Количество городов.
-     * @return Список регионов с числом городов больше указанного значения.
-     */
-    @GetMapping("/regions")
-    public ResponseEntity<List<Region>> getRegionsWithMoreTowns(
-            @RequestParam("townCount") final int townCount) {
-
-        try {
-            List<Region> result = service.findRegionsWithMoreTowns(townCount);
-            if (result != null && !result.isEmpty()) {
-                return ResponseEntity.ok(result);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(
-                    HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 }

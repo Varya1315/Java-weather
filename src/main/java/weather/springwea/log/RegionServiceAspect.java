@@ -92,40 +92,6 @@ public class RegionServiceAspect {
         }
     }
 
-    //********
-    @Pointcut("execution(* "
-            + "weather.springwea.service.RegionService."
-            + "findRegionsWithMoreTowns(int)) && args(townCount)")
-    public void findRegionsWithMoreTownsPointcut(final int townCount) {
-    }
-
-    @Before(value = "findRegionsWithMoreTownsPointcut(townCount)",
-            argNames = "townCount")
-    public void logMethodCall(final int townCount) {
-        LOG.info("Method findRegionsWithMoreTowns called"
-                + " with parameter: townCount = {}", townCount);
-    }
-
-    /**
-     * Логирует успешное выполнение поиска регионов
-     * с более чем указанным числом городов.
-     *
-     * @param townCount Количество городов.
-     * @param regions   Список регионов, удовлетворяющих условию.
-     */
-    @AfterReturning(pointcut = "findRegionsWithMoreTownsPointcut(townCount)",
-            returning = "regions", argNames = "townCount, regions")
-    public void logFindRegionsWithMoreTownsSuccess(
-            final int townCount, final List<Region> regions) {
-        if (!regions.isEmpty()) {
-            LOG.info("Successfully retrieved regions with"
-                    + " more than {} towns", townCount);
-        } else {
-            LOG.error("No regions found with"
-                    + "more than {} towns", townCount);
-        }
-    }
-
     @Pointcut("execution(* weather.springwea.service."
             + "RegionService.saveRegion(..)) && args(newRegion)")
     public void saveRegionPointcut(final Region newRegion) {
