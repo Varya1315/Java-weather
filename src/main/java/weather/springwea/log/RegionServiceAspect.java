@@ -1,9 +1,7 @@
 package weather.springwea.log;
 
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -19,6 +17,7 @@ public class RegionServiceAspect {
 
     private static final Logger LOG = LoggerFactory.getLogger(
             RegionServiceAspect.class);
+
 
     @Pointcut(value = "execution(* weather.springwea.service.RegionService."
             + "findTownsByRegionAndInterestingFact(String, String)) "
@@ -269,4 +268,3 @@ public class RegionServiceAspect {
         }
     }
 }
-

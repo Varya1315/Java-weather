@@ -113,7 +113,7 @@ public class RegionService {
         Region cachedRegion = regionCache.get(regionName);
         if (cachedRegion != null) {
             LOG.info("Region found in cache."
-                   + "Retrieving towns by interesting fact");
+                    + "Retrieving towns by interesting fact");
             // Если регион найден в кеше, возвращаем список городов из кеша
             return cachedRegion.getTowns();
         }
