@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import weather.springwea.cache.Cache;
 import weather.springwea.model.Region;
 import weather.springwea.model.Towns;
@@ -52,11 +54,14 @@ public class RegionService {
      * @param regions Список регионов для сохранения.
      * @return Список сохраненных регионов.
      */
-    public List<Region> saveRegions(
-            final List<Region> regions) {
+    public List<Region> saveRegions(final List<Region> regions) {
         List<Region> newRegions = new ArrayList<>();
-        regions.forEach(region ->
-                newRegions.add(saveRegion(region)));
+        regions.forEach(region -> {
+            if ("va".equals(region.getName())) {
+                throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Ошибка 400: Некорректное имя региона 'va'");
+            }
+            newRegions.add(saveRegion(region));
+        });
         return newRegions;
     }
 
@@ -145,6 +150,7 @@ public class RegionService {
             throw new IllegalArgumentException("Region with name '"
                     + newRegion.getName() + "' already exists");
         }
+
         repos.saveAll(newRegion.getTowns());
         Region savedRegion = repository.save(newRegion);
         regionCache.put(savedRegion.getName(), savedRegion);
