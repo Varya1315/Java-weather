@@ -31,18 +31,17 @@ public class Region {
 
     @JoinColumn(name = "region_id")
     private List<Towns> towns;
-    
-    /**
-     * Конструктор пуст, так как требуется создание
-     * объекта Region с заданными параметрами
-     * для использования в тесте. Предполагается,
-     * что параметры конструктора i, region1 и objects
-     * будут корректно инициализированы в контексте выполнения теста.
-     */
+
     public Region(final int i,
                    final String region1,
                    final List<Object> objects) {
-
+         /**
+         * Конструктор пуст, так как требуется создание
+          * объекта Region с заданными параметрами
+         * для использования в тесте. Предполагается,
+          * что параметры конструктора i, region1 и objects
+         * будут корректно инициализированы в контексте выполнения теста.
+         */
     }
     public <E> Region(final String region1, final List<E> es) {
         /**
