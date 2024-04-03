@@ -11,9 +11,7 @@ import weather.springwea.cache.Cache;
 import weather.springwea.model.Towns;
 import weather.springwea.repository.TownRepository;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -34,11 +32,10 @@ public class TownService {
      * @return Список всех городов.
      */
     public List<Towns> findAllTowns() {
-        List<Towns> cachedTowns = StreamSupport.stream(
-                townCache.getNativeCache().spliterator(),
-                        false)
-                .map(Map.Entry::getValue)
-                .collect(Collectors.toList());
+        List<Towns> cachedTowns = new ArrayList<>();
+        for (Map.Entry<String, Towns> entry : townCache.getNativeCache()) {
+            cachedTowns.add(entry.getValue());
+        }
 
         if (!cachedTowns.isEmpty()) {
             LOG.info("Found {} towns in cache", cachedTowns.size());
@@ -46,9 +43,10 @@ public class TownService {
         }
 
         List<Towns> towns = repository.findAll();
-        towns.forEach(town -> townCache.put(town.getNameTowns(), town));
-        LOG.info("Fetched {} towns from database and saved to cache",
-                towns.size());
+        for (Towns town : towns) {
+            townCache.put(town.getNameTowns(), town);
+        }
+        LOG.info("Fetched {} towns from database and saved to cache", towns.size());
 
         return towns;
     }
