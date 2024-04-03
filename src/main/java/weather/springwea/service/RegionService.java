@@ -17,6 +17,7 @@ import weather.springwea.repository.TownRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Service
@@ -36,6 +37,12 @@ public class RegionService {
      * @return Список всех регионов.
      */
     public List<Region> findAll() {
+
+        CounterService.incrementRequestCount();
+        int requestCount = CounterService.getRequestCount();
+
+        LOG.info("Текущее количество запросов: {}", requestCount);
+
         List<Region> regions = repository.findAll();
 
         regions.forEach(region ->
@@ -58,11 +65,63 @@ public class RegionService {
         List<Region> newRegions = new ArrayList<>();
         regions.forEach(region -> {
             if ("va".equals(region.getName())) {
-                throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Ошибка 400: Некорректное имя региона 'va'");
+                throw new HttpClientErrorException(
+                        HttpStatus.BAD_REQUEST,
+                        "Ошибка 400: Некорректное имя региона 'va'");
             }
             newRegions.add(saveRegion(region));
         });
         return newRegions;
+    }
+
+
+    /**
+     * Сохраняет новый регион.
+     *
+     * @param newRegion Новый регион для сохранения.
+     * @return Сохраненный регион.
+     * @throws IllegalArgumentException Если регион с именем уже существует.
+     */
+    public Region saveRegion(final Region newRegion) {
+        Region existingRegion = repository.findByName(newRegion.getName());
+        if (existingRegion != null) {
+            throw new IllegalArgumentException("Region with name '"
+                    + newRegion.getName() + "' already exists");
+        }
+        List<Towns> towns = newRegion.getTowns();
+        repos.saveAll(towns);
+        Region savedRegion = repository.save(newRegion);
+        towns.forEach(town ->
+                        regionCache.put(town.getNameTowns(), savedRegion));
+
+        LOG.info("Region '{}' saved and added to cache", savedRegion.getName());
+        return savedRegion;
+    }
+
+
+    /**
+     * Находит регион по его имени.
+     *
+     * @param name Имя региона для поиска.
+     * @return Регион с указанным именем,
+     * если найден; в противном случае возвращает null.
+     */
+    public Region findByNameRegion(final String name) {
+        return Optional.ofNullable(regionCache.get(name))
+                .map(cachedRegion -> {
+                    LOG.info("Region found in cache");
+                    return cachedRegion;
+                })
+                .orElseGet(() -> {
+                    Region region = repository.findByName(name);
+                    if (region != null) {
+                        regionCache.put(name, region);
+                        LOG.info("Region found in database and added to cache");
+                    } else {
+                        LOG.info("Region not found");
+                    }
+                    return region;
+                });
     }
 
     /**
@@ -84,7 +143,6 @@ public class RegionService {
             // Если регион найден в кеше, возвращаем список городов из кеша
             return cachedRegion.getTowns();
         }
-
         LOG.info("Region not found in cache."
                 + "Retrieving towns by interesting fact from repository");
         // Если регион не найден в кеше, получаем список городов из репозитория
@@ -101,54 +159,6 @@ public class RegionService {
         return towns;
     }
 
-
-    /**
-     * Сохраняет новый регион.
-     *
-     * @param newRegion Новый регион для сохранения.
-     * @return Сохраненный регион.
-     * @throws IllegalArgumentException
-     * Если регион с таким именем уже существует.
-     */
-    public Region saveRegion(
-            final Region newRegion) {
-        Region existingRegion = repository.findByName(newRegion.getName());
-        if (existingRegion != null) {
-            throw new IllegalArgumentException("Region with name '"
-                    + newRegion.getName() + "' already exists");
-        }
-
-        repos.saveAll(newRegion.getTowns());
-        Region savedRegion = repository.save(newRegion);
-        regionCache.put(savedRegion.getName(), savedRegion);
-        LOG.info("Region '{}' saved and added to cache", savedRegion.getName());
-        return savedRegion;
-    }
-
-    /**
-     * Находит регион по его имени.
-     *
-     * @param name Имя региона для поиска.
-     * @return Регион с указанным именем,
-     * если найден; в противном случае возвращает null.
-     */
-    public Region findByNameRegion(
-            final String name) {
-        Region cachedRegion = regionCache.get(name);
-        if (cachedRegion != null) {
-            LOG.info("Region found in cache");
-            return cachedRegion;
-        } else {
-            Region region = repository.findByName(name);
-            if (region != null) {
-                regionCache.put(name, region);
-                LOG.info("Region found in database and added to cache");
-            } else {
-                LOG.info("Region not found");
-            }
-            return region;
-        }
-    }
 
     /**
      * Удаляет регион по его имени.

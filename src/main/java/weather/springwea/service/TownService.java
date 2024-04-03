@@ -11,9 +11,11 @@ import weather.springwea.cache.Cache;
 import weather.springwea.model.Towns;
 import weather.springwea.repository.TownRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @AllArgsConstructor
@@ -32,24 +34,47 @@ public class TownService {
      * @return Список всех городов.
      */
     public List<Towns> findAllTowns() {
-        List<Towns> cachedTowns = new ArrayList<>();
-        for (Map.Entry<String, Towns> entry : townCache.getNativeCache()) {
-            cachedTowns.add(entry.getValue());
-        }
+        List<Towns> cachedTowns = StreamSupport.stream(
+                townCache.getNativeCache().spliterator(),
+                        false)
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
+
         if (!cachedTowns.isEmpty()) {
             LOG.info("Found {} towns in cache", cachedTowns.size());
-
             return cachedTowns;
         }
 
         List<Towns> towns = repository.findAll();
-        for (Towns town : towns) {
-            townCache.put(town.getNameTowns(), town);
-        }
+        towns.forEach(town -> townCache.put(town.getNameTowns(), town));
         LOG.info("Fetched {} towns from database and saved to cache",
                 towns.size());
 
         return towns;
+    }
+
+    /**
+     * Находит город по его имени.
+     *
+     * @param nameTowns Название города.
+     * @return Объект города, найденный по указанному имени.
+     */
+    public Towns findByNameTowns(final String nameTowns) {
+        return Optional.ofNullable(townCache.get(nameTowns))
+                .map(town -> {
+                    LOG.info("Town found in cache");
+                    return town;
+                })
+                .orElseGet(() -> {
+                    Towns town = repository.findByNameTowns(nameTowns);
+                    if (town != null) {
+                        LOG.info("Town found in database");
+                        townCache.put(nameTowns, town);
+                    } else {
+                        LOG.info("Town not found in database");
+                    }
+                    return town;
+                });
     }
 
     /**
@@ -83,29 +108,6 @@ public class TownService {
         } else {
             return null;
         }
-    }
-
-    /**
-     * Находит город по его имени.
-     *
-     * @param nameTowns Название города.
-     * @return Объект города, найденный по указанному имени.
-     */
-    public Towns findByNameTowns(
-            final String nameTowns) {
-        Towns town = townCache.get(nameTowns);
-        if (town != null) {
-            LOG.info("Town found in cache");
-        } else {
-            town = repository.findByNameTowns(nameTowns);
-            if (town != null) {
-                LOG.info("Town found in database");
-                townCache.put(nameTowns, town);
-            } else {
-                LOG.info("Town not found in database");
-            }
-        }
-        return town;
     }
 
     /**

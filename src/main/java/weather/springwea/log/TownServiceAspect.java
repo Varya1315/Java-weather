@@ -1,6 +1,5 @@
 package weather.springwea.log;
 
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
