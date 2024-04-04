@@ -43,6 +43,6 @@ public class Region {
     @JoinColumn(name = "region_id")
     private List<Towns> towns;
 
-    public Region(String test_region, ArrayList<Object> objects) {
+    public Region(String testRegion, List<Object> objects) {
     }
 }

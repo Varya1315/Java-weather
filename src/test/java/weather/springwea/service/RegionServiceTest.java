@@ -253,7 +253,7 @@ class RegionServiceTest {
     }
 
     @Test
-    public void testSaveRegion_NewRegion_Success() {
+     void testSaveRegion_NewRegion_Success() {
         // Arrange
         Region newRegion = new Region();
         newRegion.setName("Test Region");
@@ -281,7 +281,7 @@ class RegionServiceTest {
          }
 
     @Test
-    public void testSaveRegion_ExistingRegion_Failure() {
+     void testSaveRegion_ExistingRegion_Failure() {
         // Arrange
        Region existingRegion = new Region();
         existingRegion.setName("Test Region");
@@ -298,7 +298,7 @@ class RegionServiceTest {
 
 
     @Test
-    public void testSaveRegions_Success() {
+     void testSaveRegions_Success() {
         // Arrange
         Region region1 = new Region();
         region1.setName("Region1");
@@ -334,7 +334,7 @@ class RegionServiceTest {
     }
 
     @Test
-    public void testSaveRegions_InvalidRegionName_ExceptionThrown() {
+     void testSaveRegions_InvalidRegionName_ExceptionThrown() {
         // ArrangeMockitoAnnotations.initMocks(this);
         Region region = new Region();
         region.setName("va");
@@ -346,7 +346,7 @@ class RegionServiceTest {
         verify(regionCache, never()).put(anyString(), any(Region.class));
     }
     @Test
-    public void testFindAll() {
+     void testFindAll() {
         // Arrange
         List<Region> expectedRegions = new ArrayList<>();
         Region region1 = new Region();

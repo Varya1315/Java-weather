@@ -15,12 +15,23 @@
 	<name>springwea</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
+
+			<sonar.organization>varya1315</sonar.organization>
+			<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
 		<java.version>21</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>0.8.12</version>
 		</dependency>
 
 		<dependency>
@@ -142,4 +153,5 @@
 			</plugin>
 		</plugins>
 	</build>
+
 </project>
