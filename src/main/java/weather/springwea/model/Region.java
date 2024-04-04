@@ -1,61 +1,45 @@
 package weather.springwea.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-
+/**
+ * Represents a region entity.
+ */
 @Entity
 @NoArgsConstructor
 @Data
 @Table(name = "region")
 public class Region {
+
     /**
-     * Marks this field as the primary key for the entity.
+     * The unique identifier of the region.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
-     * Specifies that this field maps to a unique column in the database.
+     * The name of the region. Must be unique.
      */
     @Column(unique = true)
     private String name;
+
     /**
-     * Defines a one-to-many relationship between the region
-     * entity and the towns entities.
+     * The list of towns belonging to this region.
      */
     @OneToMany
-
     @JoinColumn(name = "region_id")
     private List<Towns> towns;
 
-    public Region(final int i,
-                   final String region1,
-                   final List<Object> objects) {
-         /**
-         * Конструктор пуст, так как требуется создание
-          * объекта Region с заданными параметрами
-         * для использования в тесте. Предполагается,
-          * что параметры конструктора i, region1 и objects
-         * будут корректно инициализированы в контексте выполнения теста.
-         */
-    }
-    public <E> Region(final String region1, final List<E> es) {
-        /**
-         * Конструктор, принимающий имя региона
-         * и список элементов произвольного типа.
-         * Предполагается, что список содержит элементы,
-         * связанные с данным регионом.
-         */
-    }
-
-    public Region(final String names) {
-        /**
-         * Конструктор, принимающий только имя региона.
-         * Используется для создания объекта Region с указанным именем.
-         */
-    }
 }

@@ -1,7 +1,11 @@
 package weather.springwea.model;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import lombok.Data;
+
 import org.springframework.cache.annotation.EnableCaching;
 
 /**

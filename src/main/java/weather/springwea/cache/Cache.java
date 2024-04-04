@@ -9,6 +9,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Cache<K, V> {
     private final Map<K, V> cacheMap = new ConcurrentHashMap<>();
 
+    /**
+     * Constant
+     */
     private static final int MAX_SIZE = 100;
 
     /**

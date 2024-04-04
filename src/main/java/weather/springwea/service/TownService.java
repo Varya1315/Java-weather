@@ -11,9 +11,10 @@ import weather.springwea.cache.Cache;
 import weather.springwea.model.Towns;
 import weather.springwea.repository.TownRepository;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -46,7 +47,8 @@ public class TownService {
         for (Towns town : towns) {
             townCache.put(town.getNameTowns(), town);
         }
-        LOG.info("Fetched {} towns from database and saved to cache", towns.size());
+        LOG.info("Fetched {} towns from database and saved to cache",
+                towns.size());
 
         return towns;
     }

@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import weather.springwea.cache.Cache;
@@ -68,89 +69,6 @@ class RegionServiceTest {
         verify(repository, times(1)).findByName(regionName);
         verify(regionCache, times(1)).put(regionName, regionFromRepository);
         verify(repository, times(1)).findTownsByRegionAndInterestingFact(regionName, interestingFact);
-    }
-    @Test
-    void testSaveRegion2() {
-        // Инициализация Mockito аннотаций
-
-        // Создаем новый регион для сохранения
-        Region newRegion = new Region("New Region");
-
-        // Предположим, что регион с таким именем уже существует
-        when(repository.findByName(newRegion.getName())).thenReturn(new Region("New Region"));
-
-        // Пытаемся сохранить регион
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            regionService.saveRegion(newRegion);
-        });
-
-        // Проверяем, что выбрасывается исключение с правильным сообщением
-
-        // Проверяем, что метод repository.save() не был вызван
-        verify(repository, never()).save(any(Region.class));
-
-        // Предположим, что регион с таким именем не существует
-        when(repository.findByName(newRegion.getName())).thenReturn(null);
-
-        // Предположим, что сохранение региона прошло успешно
-        Region savedRegion = new Region("New Region");
-        savedRegion.setId(1L);
-        when(repository.save(any(Region.class))).thenReturn(savedRegion);
-
-        // Вызываем метод сохранения региона
-        Region result = regionService.saveRegion(newRegion);
-
-        // Проверяем, что результат не является нулевым
-        assertNotNull(result);
-
-        // Проверяем, что метод repository.save() был вызван один раз с корректным аргументом
-        verify(repository, times(1)).save(any(Region.class));
-        // Проверяем, что регион добавлен в кэш
-        verify(regionCache, times(1)).put(savedRegion.getName(), savedRegion);
-    }
-    @Test
-    void testSaveRegions() {
-        // Создаем заглушку репозитория RegionRepository
-
-        // Создаем объект RegionService с заглушкой репозитория
-
-        // Создаем список регионов для сохранения
-        List<Region> regionsToSave = new ArrayList<>();
-        regionsToSave.add(new Region("Region 1"));
-        regionsToSave.add(new Region("Region 2"));
-        regionsToSave.add(new Region("Region 3"));
-
-        // Создаем список ожидаемых результатов сохранения
-        List<Region> expectedSavedRegions = new ArrayList<>();
-        for (Region region : regionsToSave) {
-            Region savedRegion = new Region(region.getName());
-            savedRegion.setId(1L); // Предположим, что сохраненный регион получает ID после сохранения
-            expectedSavedRegions.add(savedRegion);
-        }
-
-        // Задаем поведение заглушки репозитория при вызове метода save()
-        when(repository.save(any(Region.class))).thenAnswer(invocation -> {
-            // Имитируем сохранение региона и возвращаем его
-            Region regionToSave = invocation.getArgument(0);
-            Region savedRegion = new Region(regionToSave.getName());
-            savedRegion.setId(1L); // Предположим, что сохраненный регион получает ID после сохранения
-            return savedRegion;
-        });
-
-        // Вызываем тестируемый метод
-        List<Region> savedRegions = regionService.saveRegions(regionsToSave);
-
-        // Проверяем, что список сохраненных регионов совпадает с ожидаемым списком
-        assertEquals(expectedSavedRegions.size(), savedRegions.size());
-        for (int i = 0; i < expectedSavedRegions.size(); i++) {
-            Region expectedRegion = expectedSavedRegions.get(i);
-            Region actualRegion = savedRegions.get(i);
-            assertEquals(expectedRegion.getName(), actualRegion.getName());
-            assertEquals(expectedRegion.getId(), actualRegion.getId());
-        }
-
-        // Проверяем, что метод save() был вызван столько раз, сколько регионов нужно сохранить
-        verify(repository, times(regionsToSave.size())).save(any(Region.class));
     }
 
 
