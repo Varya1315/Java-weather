@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 /**
  * Represents a region entity.
@@ -42,4 +43,6 @@ public class Region {
     @JoinColumn(name = "region_id")
     private List<Towns> towns;
 
+    public Region(String test_region, ArrayList<Object> objects) {
+    }
 }

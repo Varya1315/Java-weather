@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import weather.springwea.cache.Cache;
 import weather.springwea.model.Region;
 import weather.springwea.model.Towns;
@@ -251,5 +252,122 @@ class RegionServiceTest {
         verify(regionCache, never()).remove(any());
     }
 
+    @Test
+    public void testSaveRegion_NewRegion_Success() {
+        // Arrange
+        Region newRegion = new Region();
+        newRegion.setName("Test Region");
+        List<Towns> towns = new ArrayList<>();
+        Towns town1 = new Towns();
+        town1.setNameTowns("Town1");
+        Towns town2 = new Towns();
+        town2.setNameTowns("Town2");
+        towns.add(town1);
+        towns.add(town2);
+        newRegion.setTowns(towns);
 
+        // Stubbing repository methods
+        when(repository.findByName(anyString())).thenReturn(null);
+        when(repository.save(any(Region.class))).thenReturn(newRegion);
+
+        // Act
+        Region savedRegion = regionService.saveRegion(newRegion);
+
+        // Assert
+        assertNotNull(savedRegion);
+        assertEquals("Test Region", savedRegion.getName());
+        assertEquals(2, savedRegion.getTowns().size());
+        verify(repository, times(1)).findByName(anyString());
+         }
+
+    @Test
+    public void testSaveRegion_ExistingRegion_Failure() {
+        // Arrange
+       Region existingRegion = new Region();
+        existingRegion.setName("Test Region");
+        when(repository.findByName(anyString())).thenReturn(existingRegion);
+        Region newRegion = new Region();
+        newRegion.setName("Test Region");
+
+        // Act and Assert
+        assertThrows(IllegalArgumentException.class, () -> regionService.saveRegion(newRegion));
+        verify(repository, times(1)).findByName(anyString());
+        verify(repository, never()).save(any(Region.class));
+        verify(regionCache, never()).put(anyString(), any(Region.class));
+    }
+
+
+    @Test
+    public void testSaveRegions_Success() {
+        // Arrange
+        Region region1 = new Region();
+        region1.setName("Region1");
+        List<Towns> towns1 = new ArrayList<>();
+        Towns town1 = new Towns();
+        town1.setNameTowns("Town1");
+        towns1.add(town1);
+        region1.setTowns(towns1);
+
+        Region region2 = new Region();
+        region2.setName("Region2");
+        List<Towns> towns2 = new ArrayList<>();
+        Towns town2 = new Towns();
+        town2.setNameTowns("Town2");
+        towns2.add(town2);
+        region2.setTowns(towns2);
+
+        List<Region> regions = List.of(region1, region2);
+
+        // Stubbing repository method
+        when(repository.save(any(Region.class))).thenReturn(region1).thenReturn(region2);
+
+        // Act
+        List<Region> savedRegions = regionService.saveRegions(regions);
+
+        // Assert
+        assertNotNull(savedRegions);
+        assertEquals(2, savedRegions.size());
+        assertEquals("Region1", savedRegions.get(0).getName());
+        assertEquals("Region2", savedRegions.get(1).getName());
+        verify(repository, times(2)).save(any(Region.class));
+        verify(regionCache, times(2)).put(anyString(), any(Region.class));
+    }
+
+    @Test
+    public void testSaveRegions_InvalidRegionName_ExceptionThrown() {
+        // ArrangeMockitoAnnotations.initMocks(this);
+        Region region = new Region();
+        region.setName("va");
+        List<Region> regions = List.of(region);
+
+        // Act and Assert
+        assertThrows(HttpClientErrorException.class, () -> regionService.saveRegions(regions));
+        verify(repository, never()).save(any(Region.class));
+        verify(regionCache, never()).put(anyString(), any(Region.class));
+    }
+    @Test
+    public void testFindAll() {
+        // Arrange
+        List<Region> expectedRegions = new ArrayList<>();
+        Region region1 = new Region();
+        region1.setName("Region1");
+        Region region2 = new Region();
+        region2.setName("Region2");
+        expectedRegions.add(region1);
+        expectedRegions.add(region2);
+
+        // Stubbing repository method
+        when(repository.findAll()).thenReturn(expectedRegions);
+
+        // Act
+        List<Region> actualRegions = regionService.findAll();
+
+        // Assert
+        assertEquals(expectedRegions.size(), actualRegions.size());
+        for (int i = 0; i < expectedRegions.size(); i++) {
+            assertEquals(expectedRegions.get(i).getName(), actualRegions.get(i).getName());
+        }
+        verify(repository, times(1)).findAll();
+        verify(regionCache, times(2)).put(anyString(), any(Region.class)); // Assuming there are 2 regions in the list
+     }
 }
