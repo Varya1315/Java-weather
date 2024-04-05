@@ -15,8 +15,13 @@ class SpringweaApplicationTests {
 
     @Test
     public void contextLoads() {
-        // Проверяем, что контекст приложения загружается успешно,
-        // что означает, что все бины и конфигурации настроены правильно.
-        assertThat(context).isNotNull();
+        try {
+            // Проверяем, что контекст приложения загружается успешно,
+            // что означает, что все бины и конфигурации настроены правильно.
+            assertThat(context).isNotNull();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 }
