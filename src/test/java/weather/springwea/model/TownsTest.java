@@ -73,7 +73,15 @@ public class TownsTest {
 
         Towns town = new Towns(id, coordinates, nameTowns, time, positionSun, interestingFact);
 
-         }
+        // Проверяем, что все параметры конструктора установлены корректно
+        assertEquals(id, town.getId());
+        assertEquals(coordinates, town.getCoordinates());
+        assertEquals(nameTowns, town.getNameTowns());
+        assertEquals(time, town.getTime());
+        assertEquals(positionSun, town.getPositionSun());
+        assertEquals(interestingFact, town.getInterestingFact());
+    }
+
 
     @Test
     public void testSetName() {

@@ -47,9 +47,6 @@ public class Towns {
      */
     private String interestingFact;
 
-    public Towns(Long id, String coordinates, String nameTowns, int time, String positionSun, String interestingFact) {
-    }
-
     public Towns() {
 
     }
@@ -59,5 +56,13 @@ public class Towns {
 
     public String getName() {
         return nameTowns;
+    }
+    public Towns(Long id, String coordinates, String nameTowns, int time, String positionSun, String interestingFact) {
+        this.id = id;
+        this.coordinates = coordinates;
+        this.nameTowns = nameTowns;
+        this.time = time;
+        this.positionSun = positionSun;
+        this.interestingFact = interestingFact;
     }
 }
