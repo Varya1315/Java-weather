@@ -1,0 +1,11 @@
+<coverage>
+    <package name="weather.springwea.model" line-rate="0.0" branch-rate="0.0">
+        <class name="Region" filename="weather/springwea/model/Region.java" line-rate="0.0" branch-rate="0.0">
+            <!-- Здесь могут быть дополнительные элементы для покрытия, если это необходимо -->
+        </class>
+        <class name="Towns" filename="weather/springwea/model/Region.java" line-rate="0.0" branch-rate="0.0">
+            <!-- Здесь могут быть дополнительные элементы для покрытия, если это необходимо -->
+        </class>
+        <!-- Добавьте дополнительные классы модели по мере необходимости -->
+    </package>
+</coverage>
