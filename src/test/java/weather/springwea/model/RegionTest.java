@@ -99,4 +99,52 @@ public class RegionTest {
         String expectedToString = "Region(id=null, name=TestRegion, towns=null)";
         assertEquals(expectedToString, region.toString());
     }
+    @Test
+    public void testIdGetterSetter() {
+        region.setId(1L);
+        assertEquals(1L, region.getId());
+    }
+
+    @Test
+    public void testNameGetterSetter() {
+        region.setName("TestRegion");
+        assertEquals("TestRegion", region.getName());
+    }
+
+    @Test
+    public void testTownsGetterSetter() {
+        List<Towns> towns = new ArrayList<>();
+        Towns town1 = new Towns();
+        town1.setName("Town1");
+        Towns town2 = new Towns();
+        town2.setName("Town2");
+        towns.add(town1);
+        towns.add(town2);
+        region.setTowns(towns);
+
+        assertNotNull(region.getTowns());
+       }
+
+    @Test
+    public void testAllArgsConstructor() {
+        // Создаем список городов
+        List<Towns> towns = new ArrayList<>();
+        Towns town = new Towns();
+        town.setName("TestTown");
+        towns.add(town);
+
+        // Создаем список объектов типа Object и добавляем в него города
+        List<Object> objects = new ArrayList<>(towns);
+
+        // Создаем регион, передавая список объектов в конструктор
+        Region region = new Region("TestRegion", objects);
+        region.setName("TestRegion");
+
+        // Проверяем, что регион был успешно создан и его атрибуты установлены корректно
+        assertNotNull(region);
+        assertEquals("TestRegion", region.getName());
+    }
+
+
+
 }

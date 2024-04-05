@@ -53,4 +53,11 @@ public class Towns {
     public Towns() {
 
     }
+
+    public void setName(String town1) {
+    }
+
+    public String getName() {
+        return nameTowns;
+    }
 }

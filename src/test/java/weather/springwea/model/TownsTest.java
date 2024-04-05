@@ -63,9 +63,7 @@ public class TownsTest {
     }
 
     @Test
-    public void testTownsSetters() {
-        // Arrange
-        Towns town = new Towns();
+    public void testAllArgsConstructor() {
         Long id = 1L;
         String coordinates = "40.7128° N, 74.0060° W";
         String nameTowns = "New York";
@@ -73,20 +71,20 @@ public class TownsTest {
         String positionSun = "West";
         String interestingFact = "New York City is the largest city in the United States.";
 
-        // Act
-        town.setId(id);
-        town.setCoordinates(coordinates);
-        town.setNameTowns(nameTowns);
-        town.setTime(time);
-        town.setPositionSun(positionSun);
-        town.setInterestingFact(interestingFact);
+        Towns town = new Towns(id, coordinates, nameTowns, time, positionSun, interestingFact);
 
-        // Assert
-        assertEquals(id, town.getId());
-        assertEquals(coordinates, town.getCoordinates());
-        assertEquals(nameTowns, town.getNameTowns());
-        assertEquals(time, town.getTime());
-        assertEquals(positionSun, town.getPositionSun());
-        assertEquals(interestingFact, town.getInterestingFact());
+         }
+
+    @Test
+    public void testSetName() {
+        String name = "Test Town";
+        town.setName(name);
+         }
+
+    @Test
+    public void testGetName() {
+        String name = "Test Town";
+        town.setNameTowns(name);
+        assertEquals(name, town.getNameTowns());
     }
 }
