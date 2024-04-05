@@ -1,10 +1,20 @@
 package weather.springwea.model;
+import jakarta.transaction.Transactional;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.DirtiesContext;
+import weather.springwea.repository.TownRepository;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
+@DataJpaTest
 public class TownsTest {
+    @Autowired
+    private TownRepository townsRepository;
 
     @Test
     public void testTownsSetters() {

@@ -7,14 +7,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import jakarta.persistence.EntityManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.test.annotation.DirtiesContext;
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegionTest {
 
+
+    private EntityManager entityManager;
     @Mock
     private Towns town1;
 
@@ -42,4 +47,7 @@ public class RegionTest {
         assertEquals(name, region.getName());
         assertEquals(towns, region.getTowns());
     }
+
+
 }
+
