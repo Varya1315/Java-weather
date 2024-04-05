@@ -1,20 +1,66 @@
 package weather.springwea.model;
-import jakarta.transaction.Transactional;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.DirtiesContext;
-import weather.springwea.repository.TownRepository;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@DataJpaTest
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 public class TownsTest {
-    @Autowired
-    private TownRepository townsRepository;
+
+    private Towns town;
+
+    @BeforeEach
+    public void setUp() {
+        town = new Towns();
+    }
+
+    @Test
+    public void testIdGetterAndSetter() {
+        Long id = 1L;
+        town.setId(id);
+        assertEquals(id, town.getId());
+    }
+
+    @Test
+    public void testCoordinatesGetterAndSetter() {
+        String coordinates = "51.5074° N, 0.1278° W";
+        town.setCoordinates(coordinates);
+        assertEquals(coordinates, town.getCoordinates());
+    }
+
+    @Test
+    public void testNameTownsGetterAndSetter() {
+        String nameTowns = "London";
+        town.setNameTowns(nameTowns);
+        assertEquals(nameTowns, town.getNameTowns());
+    }
+
+    @Test
+    public void testTimeGetterAndSetter() {
+        int time = 3600; // 1 hour in seconds
+        town.setTime(time);
+        assertEquals(time, town.getTime());
+    }
+
+    @Test
+    public void testPositionSunGetterAndSetter() {
+        String positionSun = "East";
+        town.setPositionSun(positionSun);
+        assertEquals(positionSun, town.getPositionSun());
+    }
+
+    @Test
+    public void testInterestingFactGetterAndSetter() {
+        String interestingFact = "London is the capital of England.";
+        town.setInterestingFact(interestingFact);
+        assertEquals(interestingFact, town.getInterestingFact());
+    }
+
+    @Test
+    public void testNoArgsConstructor() {
+        assertNotNull(town);
+    }
 
     @Test
     public void testTownsSetters() {

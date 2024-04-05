@@ -1,51 +1,60 @@
 package weather.springwea.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.EntityManager;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class RegionTest {
 
+    private Region region;
 
-    private EntityManager entityManager;
-    @Mock
-    private Towns town1;
-
-    @Mock
-    private Towns town2;
+    @BeforeEach
+    public void setUp() {
+        region = new Region();
+    }
 
     @Test
-    public void testRegionConstructor() {
-        // Arrange
+    public void testIdGetterAndSetter() {
         Long id = 1L;
-        String name = "TestRegion";
-        List<Towns> towns = new ArrayList<>();
-        towns.add(town1);
-        towns.add(town2);
-
-        // Act
-        Region region = new Region();
         region.setId(id);
-        region.setName(name);
-        region.setTowns(towns);
-
-        // Assert
-        assertNotNull(region);
         assertEquals(id, region.getId());
+    }
+
+    @Test
+    public void testNameGetterAndSetter() {
+        String name = "TestRegion";
+        region.setName(name);
         assertEquals(name, region.getName());
+    }
+
+    @Test
+    public void testTownsGetterAndSetter() {
+        List<Towns> towns = new ArrayList<>();
+        towns.add(new Towns());
+        towns.add(new Towns());
+        region.setTowns(towns);
         assertEquals(towns, region.getTowns());
     }
 
+    @Test
+    public void testNoArgsConstructor() {
+        assertNotNull(region);
+    }
 
+
+    @Test
+    public void testToString() {
+        String name = "TestRegion";
+        region.setName(name);
+        String expectedToString = "Region(id=null, name=TestRegion, towns=null)";
+        assertEquals(expectedToString, region.toString());
+    }
 }
-
