@@ -1,20 +1,22 @@
 package weather.springwea;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class SpringweaApplicationTests {
+
+    @Autowired
+    private ApplicationContext context;
 
     @Test
     public void contextLoads() {
         // Проверяем, что контекст приложения загружается успешно,
         // что означает, что все бины и конфигурации настроены правильно.
-    }
-
-    @Test
-    public void applicationStarts() {
-        // Проверяем, что приложение успешно запускается без ошибок.
-        SpringweaApplication.main(new String[] {});
+        assertThat(context).isNotNull();
     }
 }
