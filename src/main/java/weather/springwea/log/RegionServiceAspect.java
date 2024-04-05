@@ -21,6 +21,7 @@ public class RegionServiceAspect {
     private static final Logger LOG = LoggerFactory.getLogger(
             RegionServiceAspect.class);
 
+
     @Pointcut("execution(* weather.springwea.service.RegionService.findAll())")
     public void findAllPointcut() {
     }
