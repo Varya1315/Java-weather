@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import jakarta.persistence.EntityManager;
@@ -12,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.test.annotation.DirtiesContext;
 
 
 @RunWith(MockitoJUnitRunner.class)
