@@ -11,8 +11,6 @@ import weather.springwea.model.Region;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 public class RegionServiceAspectTest {
 
