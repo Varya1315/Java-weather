@@ -46,4 +46,11 @@ public class Towns {
      * An interesting fact about the town.
      */
     private String interestingFact;
+
+    public Towns(Long id, String coordinates, String nameTowns, int time, String positionSun, String interestingFact) {
+    }
+
+    public Towns() {
+
+    }
 }

@@ -160,5 +160,13 @@ public class TownService {
 
     public void logBeforeFindAllTowns() {
     }
+
+    public Towns getTownByName(String townName) {
+        return null;
+    }
+
+    public Towns saveTown(Towns townToSave) {
+        return townToSave;
+    }
 }
 
