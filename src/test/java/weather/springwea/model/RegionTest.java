@@ -79,7 +79,7 @@ public class RegionTest {
     }
 
     @Test
-    public void testNoArgsConstructor() {
+    public void testNoArgsConstructor1() {
         assertNotNull(region);
     }
 
@@ -126,7 +126,7 @@ public class RegionTest {
        }
 
     @Test
-    public void testAllArgsConstructor() {
+    public void testAllArgsConstructor2() {
         // Создаем список городов
         List<Towns> towns = new ArrayList<>();
         Towns town = new Towns();
@@ -143,6 +143,62 @@ public class RegionTest {
         // Проверяем, что регион был успешно создан и его атрибуты установлены корректно
         assertNotNull(region);
         assertEquals("TestRegion", region.getName());
+    }
+
+    @Test
+    public void testIdGetterAndSetter22() {
+        Long id = 1L;
+        region.setId(id);
+        assertEquals(id, region.getId());
+    }
+
+    @Test
+    public void testNameGetterAndSetter22() {
+        String name = "TestRegion";
+        region.setName(name);
+        assertEquals(name, region.getName());
+    }
+
+    @Test
+    public void testTownsGetterAndSetter22() {
+        List<Towns> towns = new ArrayList<>();
+        towns.add(new Towns());
+        towns.add(new Towns());
+        region.setTowns(towns);
+        assertEquals(towns, region.getTowns());
+    }
+
+    @Test
+    public void testNoArgsConstructor() {
+        assertNotNull(region);
+    }
+
+    @Test
+    public void testAllArgsConstructor() {
+        // Create a list of towns
+        List<Towns> towns = new ArrayList<>();
+        Towns town = new Towns();
+        town.setName("TestTown");
+        towns.add(town);
+
+        // Create a region
+        Region region = new Region();
+        region.setName("TestRegion");
+        region.setTowns(towns);
+
+        // Check that the region was successfully created and its attributes are set correctly
+        assertNotNull(region);
+        assertEquals("TestRegion", region.getName());
+        assertEquals(towns, region.getTowns());
+    }
+
+
+    @Test
+    public void testToString22() {
+        String name = "TestRegion";
+        region.setName(name);
+        String expectedToString = "Region(id=null, name=TestRegion, towns=null)";
+        assertEquals(expectedToString, region.toString());
     }
 
 
