@@ -110,43 +110,4 @@ public class TownServiceAspect {
             LOG.error("Town '{}' not found", nameTowns);
         }
     }
-
-    @Pointcut(value = "execution(* weather.springwea.service."
-            + "TownService.updateTownByName(String, String))"
-            + " && args(nameTowns, coordinates)",
-            argNames = "nameTowns,coordinates")
-    public void updateTownByNamePointcut(
-            final String nameTowns,
-            final String coordinates) {
-    }
-
-    @Before(value = "updateTownByNamePointcut(nameTowns, coordinates)",
-            argNames = "nameTowns,coordinates")
-    public void logBeforeUpdateTown(
-            final String nameTowns,
-            final String coordinates) {
-        LOG.info("Attempting to update town '{}' with new coordinates '{}'",
-                nameTowns, coordinates);
-    }
-    /**
-     * Логирует результаты обновления города по его имени.
-     *
-     * @param nameTowns    Имя обновляемого города.
-     * @param coordinates  Координаты обновляемого города.
-     * @param town         Обновленный город или null,
-     *                     если обновление не удалось.
-     */
-    @AfterReturning(pointcut = "updateTownByNamePointcut("
-            + "nameTowns, coordinates)", returning = "town",
-            argNames = "nameTowns,coordinates,town")
-    public void logUpdateTown(final String nameTowns,
-                              final String coordinates,
-                              final Towns town) {
-        if (town != null) {
-            LOG.info("Town '{}' updated successfully", nameTowns);
-        } else {
-            LOG.error("Failed to update town '{}'", nameTowns);
-        }
-    }
-
 }

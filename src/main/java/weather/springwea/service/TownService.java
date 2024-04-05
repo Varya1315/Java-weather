@@ -137,5 +137,28 @@ public class TownService {
         }
     }
 
+    public void logBeforeUpdateTown(String nameTowns, String coordinates) {
+    }
+
+    public void logUpdateTown(String nameTowns, String coordinates, Towns town) {
+    }
+
+    public void logFindByNameTowns(String townName, Towns town) {
+    }
+
+    public void logBeforeFindByNameTowns(String townName) {
+    }
+
+    public void logDeleteTowns(String townName, String error) {
+    }
+
+    public void logBeforeDeleteTowns(String townName) {
+    }
+
+    public void logFindAllTowns(List<Towns> towns) {
+    }
+
+    public void logBeforeFindAllTowns() {
+    }
 }
 

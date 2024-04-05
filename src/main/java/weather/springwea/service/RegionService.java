@@ -218,5 +218,42 @@ public class RegionService {
     }
 
 
+    public void logUpdateRegionSuccess(String name, String newName, Region updatedRegion) {
+    }
 
+    public void logSaveRegionsSuccess(List<Region> regions, List<Region> newRegions) {
+    }
+
+    public void logSaveRegionsCall(List<Region> regions) {
+    }
+
+    public void logBeforeDeleteRegion(String regionName) {
+    }
+
+    public void logDeleteRegionSuccess(String regionName, String result) {
+    }
+
+    public void logFindRegionSuccess(String regionName, Region foundRegion) {
+    }
+
+    public void logBeforeFindByNameRegion(String regionName) {
+    }
+
+    public void logSaveRegionSuccess(Region newRegion, Object o) {
+    }
+
+    public void logBeforeSaveRegion(Region newRegion) {
+    }
+
+    public void logMethodCall(String regionName, String interestingFact) {
+    }
+
+    public void logFindTownsByRegionAndInterestingFact(String regionName, String interestingFact, List<Towns> towns) {
+    }
+
+    public void logMethodCall() {
+    }
+
+    public void logFindAllSuccess(List<Region> regions) {
+    }
 }
