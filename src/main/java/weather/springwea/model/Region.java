@@ -12,7 +12,6 @@ import jakarta.persistence.JoinColumn;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 /**
  * Represents a region entity.
