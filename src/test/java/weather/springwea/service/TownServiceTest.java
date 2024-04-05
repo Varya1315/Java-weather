@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
 import weather.springwea.cache.Cache;
 import weather.springwea.model.Towns;
 import weather.springwea.repository.TownRepository;
@@ -26,6 +27,8 @@ import static org.mockito.Mockito.*;
 
     @InjectMocks
     private TownService service;
+     @Mock
+     private Logger logger;
 
     @BeforeEach
     void setUp() {
@@ -179,4 +182,124 @@ import static org.mockito.Mockito.*;
         verify(repository, never()).save(any(Towns.class)); // Verifying if repository save method is never called
         assertNull(result); // Verifying if null is returned
     }
+     @Test
+     public void testLogBeforeUpdateTown() {
+         // Arrange
+         String nameTowns = "TestTown";
+         String coordinates = "TestCoordinates";
+
+         // Act
+         service.logBeforeUpdateTown(nameTowns, coordinates);
+
+         // Assert
+         verify(logger).info("Before updating town '{}'", nameTowns);
+     }
+
+     @Test
+     public void testLogUpdateTown() {
+         // Arrange
+         String nameTowns = "TestTown";
+         String coordinates = "TestCoordinates";
+         Towns town = new Towns();
+
+         // Act
+         service.logUpdateTown(nameTowns, coordinates, town);
+
+         // Assert
+         verify(logger).info("Updated town '{}'", nameTowns);
+     }
+
+     @Test
+     public void testLogFindByNameTowns() {
+         // Arrange
+         String townName = "TestTown";
+         Towns town = new Towns();
+
+         // Act
+         service.logFindByNameTowns(townName, town);
+
+         // Assert
+         verify(logger).info("Found town '{}' by name", townName);
+     }
+
+     @Test
+     public void testLogBeforeFindByNameTowns() {
+         // Arrange
+         String townName = "TestTown";
+
+         // Act
+         service.logBeforeFindByNameTowns(townName);
+
+         // Assert
+         verify(logger).info("Before finding town '{}' by name", townName);
+     }
+
+     @Test
+     public void testLogDeleteTowns() {
+         // Arrange
+         String townName = "TestTown";
+         String error = "TestError";
+
+         // Act
+         service.logDeleteTowns(townName, error);
+
+         // Assert
+         verify(logger).info("Deleted town '{}' with error '{}'", townName, error);
+     }
+
+     @Test
+     public void testLogBeforeDeleteTowns() {
+         // Arrange
+         String townName = "TestTown";
+
+         // Act
+         service.logBeforeDeleteTowns(townName);
+
+         // Assert
+         verify(logger).info("Before deleting town '{}'", townName);
+     }
+
+     @Test
+     public void testLogFindAllTowns() {
+         // Act
+         service.logFindAllTowns();
+
+         // Assert
+         verify(logger).info("Found all towns");
+     }
+
+     @Test
+     public void testLogBeforeFindAllTowns() {
+         // Arrange
+
+         // Act
+         service.logBeforeFindAllTowns();
+
+         // Assert
+         verify(logger).info("Before finding all towns");
+     }
+
+     @Test
+     public void testGetTownByName() {
+         // Arrange
+         String townName = "TestTown";
+
+         // Act
+         Towns result = service.getTownByName(townName);
+
+         // Assert
+         assertNull(result); // Assuming null is returned when town is not found
+     }
+
+     @Test
+     public void testSaveTown() {
+         // Arrange
+         Towns townToSave = new Towns();
+
+         // Act
+         Towns result = service.saveTown(townToSave);
+
+         // Assert
+         assertEquals(townToSave, result); // Assuming the saved town is returned
+     }
 }

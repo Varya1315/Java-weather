@@ -28,5 +28,5 @@ public class RegionServiceAspectTest {
     private String eq(String regionName) {
         return regionName;
     }
-    
+
 }

@@ -155,7 +155,7 @@ public class TownService {
     public void logBeforeDeleteTowns(String townName) {
     }
 
-    public void logFindAllTowns(List<Towns> towns) {
+    public void logFindAllTowns() {
     }
 
     public void logBeforeFindAllTowns() {
